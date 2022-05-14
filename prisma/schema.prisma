@@ -36,3 +36,205 @@ model Note {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
 }
+
+model Movie {
+  id                String     @id @default(cuid())
+  tmdbId            Int        @unique
+  imdbId            String?
+  adult             Boolean
+  backdropPath      String?
+  budget            Int
+  genres            Genre[]
+  homepage          String?
+  originalLanguage  String
+  originalTitle     String
+  overview          String?
+  popularity        Float
+  posterPath        String?
+  producers         Company[]
+  productionCountry Country[]
+  releaseDate       DateTime
+  revenue           Int
+  runtime           Int?
+  spokenLanguages   Language[]
+  status            String
+  tagline           String?
+  title             String
+  videos            Video[]
+  voteAverage       Float
+  voteCount         Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Show {
+  id                  String     @id @default(cuid())
+  tmdbId              Int
+  backdropPath        String?
+  creators            Credit[]   @relation("Creators")
+  cast                Credit[]   @relation("Cast")
+  genres              Genre[]
+  homepage            String
+  inProduction        Boolean
+  name                String
+  networks            Company[]  @relation("Networks")
+  originalLanguage    String
+  originalName        String
+  overview            String
+  popularity          Float
+  posterPath          String?
+  producers           Company[]  @relation("Producers")
+  productionCountries Country[]
+  seasons             Season[]
+  spokenLanguages     Language[]
+  status              String
+  tagline             String
+  type                String
+  videos              Video[]
+  voteAverage         Float
+  voteCount           Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Season {
+  id           String    @id @default(cuid())
+  tmdbId       Int       @unique
+  episodes     Episode[]
+  overview     String?
+  posterPath   String?
+  seasonNumber Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  show   Show?   @relation(fields: [showId], references: [id])
+  showId String?
+}
+
+model Episode {
+  id             String   @id @default(cuid())
+  tmdbId         Int      @unique
+  airDate        DateTime
+  crew           Credit[] @relation("Crew")
+  number         Int
+  name           String
+  overview       String?
+  productionCode String?
+  runtime        Float?
+  stillPath      String?
+  voteAverage    Float
+  voteCount      Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  season   Season? @relation(fields: [seasonId], references: [id])
+  seasonId String?
+}
+
+model Genre {
+  id     String  @id @default(cuid())
+  tmdbId Int     @unique
+  movies Movie[]
+  shows  Show[]
+  name   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Company {
+  id            String  @id @default(cuid())
+  tmdbId        Int     @unique
+  description   String?
+  headquarters  String?
+  homepage      String?
+  logoPath      String?
+  movies        Movie[]
+  networkOf     Show[]  @relation("Networks")
+  producerOf    Show[]  @relation("Producers")
+  name          String
+  originCountry String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Country {
+  id       String  @id @default(cuid())
+  iso31661 String  @unique
+  movies   Movie[]
+  shows    Show[]
+  name     String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Language {
+  id      String  @id @default(cuid())
+  iso6391 String  @unique
+  movies  Movie[]
+  shows   Show[]
+  name    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Person {
+  id           String    @id @default(cuid())
+  tmdbId       Int       @unique
+  imdbId       String?
+  name         String
+  activity     String
+  adult        Boolean
+  biography    String?
+  birthday     DateTime?
+  credits      Credit[]
+  deathday     DateTime?
+  gender       Int
+  homepage     String?
+  placeOfBirth String?
+  popularity   Float
+  profilePath  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Credit {
+  id         String    @id @default(cuid())
+  tmdbId     String    @unique
+  creatorsOf Show[]    @relation("Creators")
+  castOf     Show[]    @relation("Cast")
+  crewOf     Episode[] @relation("Crew")
+  job        String?
+  person     Person?   @relation(fields: [personId], references: [id])
+  personId   String?
+  type       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Video {
+  id          String   @id @default(cuid())
+  iso6391     String
+  iso31661    String
+  name        String
+  key         String
+  movies      Movie[]
+  shows       Show[]
+  provider    String
+  size        Int
+  type        String
+  official    Boolean
+  publishedAt DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

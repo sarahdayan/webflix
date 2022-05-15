@@ -1,12 +1,19 @@
-import type { Password, User } from "@prisma/client";
+import type { Password, Prisma, User } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 import { prisma } from "~/db.server";
 
 export type { User } from "@prisma/client";
 
-export async function getUserById(id: User["id"]) {
-  return prisma.user.findUnique({ where: { id } });
+type GetUserByIdParams<TInclude extends Prisma.UserInclude> = {
+  include: Prisma.Subset<TInclude, Prisma.UserInclude>;
+};
+
+export async function getUserById<T extends Prisma.UserInclude>(
+  id: User["id"],
+  params: GetUserByIdParams<T> = {} as GetUserByIdParams<T>
+) {
+  return prisma.user.findUnique({ ...params, where: { id } });
 }
 
 export async function getUserByEmail(email: User["email"]) {

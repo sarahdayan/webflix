@@ -13,8 +13,10 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+import { getUser } from "~/session.server";
+import type { ReturnedGetUser } from "~/session.server";
+
 import tailwindStylesheetUrl from "./styles/tailwind.css";
-import { getUser } from "./session.server";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
@@ -27,7 +29,7 @@ export const meta: MetaFunction = () => ({
 });
 
 type LoaderData = {
-  user: Awaited<ReturnType<typeof getUser>>;
+  user: ReturnedGetUser;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {

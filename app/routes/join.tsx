@@ -12,6 +12,9 @@ import { getUserId, createUserSession } from "~/session.server";
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
 
+import { WebflixLogo } from "~/components/logos/webflix";
+import background from "~/images/background.jpg";
+
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
   if (userId) return redirect("/");
@@ -92,13 +95,25 @@ export default function Join() {
   }, [actionData]);
 
   return (
-    <div className="flex min-h-full flex-col justify-center">
-      <div className="mx-auto w-full max-w-md px-8">
+    <div
+      className="relative flex min-h-full flex-col bg-cover bg-top"
+      style={{ backgroundImage: `url(${background})` }}
+    >
+      <header className="absolute top-0 p-4">
+        <Link to={{ pathname: "/" }}>
+          <WebflixLogo className="h-10 text-red-600" />
+        </Link>
+      </header>
+      <div className="mx-auto mt-48 w-full max-w-md bg-black/80 p-8">
+        <h2 className="mb-8 text-2xl font-bold text-white">
+          Create a new account
+        </h2>
+
         <Form method="post" className="space-y-6">
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-white"
             >
               Email address
             </label>
@@ -110,10 +125,10 @@ export default function Join() {
                 autoFocus={true}
                 name="email"
                 type="email"
-                autoComplete="email"
+                autoComplete="off"
                 aria-invalid={actionData?.errors?.email ? true : undefined}
                 aria-describedby="email-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+                className="w-full rounded border-0 px-2 py-1 text-lg"
               />
               {actionData?.errors?.email && (
                 <div className="pt-1 text-red-700" id="email-error">
@@ -126,7 +141,7 @@ export default function Join() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-white"
             >
               Password
             </label>
@@ -139,7 +154,7 @@ export default function Join() {
                 autoComplete="new-password"
                 aria-invalid={actionData?.errors?.password ? true : undefined}
                 aria-describedby="password-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+                className="w-full rounded border-0 px-2 py-1 text-lg"
               />
               {actionData?.errors?.password && (
                 <div className="pt-1 text-red-700" id="password-error">
@@ -152,15 +167,15 @@ export default function Join() {
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <button
             type="submit"
-            className="w-full rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
+            className="w-full rounded bg-red-500 px-4 py-2 text-white transition-colors hover:bg-red-600 focus:bg-red-400"
           >
             Create Account
           </button>
           <div className="flex items-center justify-center">
-            <div className="text-center text-sm text-gray-500">
+            <div className="text-center text-sm text-white/60">
               Already have an account?{" "}
               <Link
-                className="text-blue-500 underline"
+                className="text-red-500 underline transition-colors hover:text-red-600"
                 to={{
                   pathname: "/login",
                   search: searchParams.toString(),

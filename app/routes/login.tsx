@@ -10,6 +10,8 @@ import * as React from "react";
 import { createUserSession, getUserId } from "~/session.server";
 import { verifyLogin } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
+import { WebflixLogo } from "~/components/logos/webflix";
+import background from "~/images/background.jpg";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -91,13 +93,25 @@ export default function LoginPage() {
   }, [actionData]);
 
   return (
-    <div className="flex flex-col justify-center min-h-full">
-      <div className="w-full max-w-md px-8 mx-auto">
+    <div
+      className="relative flex min-h-full flex-col bg-cover bg-top"
+      style={{ backgroundImage: `url(${background})` }}
+    >
+      <header className="absolute top-0 p-4">
+        <Link to={{ pathname: "/" }}>
+          <WebflixLogo className="h-10 text-red-600" />
+        </Link>
+      </header>
+      <div className="mx-auto mt-48 w-full max-w-md bg-black/80 p-8">
+        <h2 className="mb-8 text-2xl font-bold text-white">
+          Sign in to your account
+        </h2>
+
         <Form method="post" className="space-y-6">
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-white"
             >
               Email address
             </label>
@@ -109,10 +123,10 @@ export default function LoginPage() {
                 autoFocus={true}
                 name="email"
                 type="email"
-                autoComplete="email"
+                autoComplete="off"
                 aria-invalid={actionData?.errors?.email ? true : undefined}
                 aria-describedby="email-error"
-                className="w-full px-2 py-1 text-lg border border-gray-500 rounded"
+                className="w-full rounded border-0 bg-white px-2 py-1 text-lg"
               />
               {actionData?.errors?.email && (
                 <div className="pt-1 text-red-700" id="email-error">
@@ -125,7 +139,7 @@ export default function LoginPage() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-white"
             >
               Password
             </label>
@@ -138,7 +152,7 @@ export default function LoginPage() {
                 autoComplete="current-password"
                 aria-invalid={actionData?.errors?.password ? true : undefined}
                 aria-describedby="password-error"
-                className="w-full px-2 py-1 text-lg border border-gray-500 rounded"
+                className="w-full rounded border-0 bg-white px-2 py-1 text-lg"
               />
               {actionData?.errors?.password && (
                 <div className="pt-1 text-red-700" id="password-error">
@@ -151,7 +165,7 @@ export default function LoginPage() {
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:bg-blue-400"
+            className="w-full rounded bg-red-500 px-4 py-2 text-white transition-colors hover:bg-red-600 focus:bg-red-400"
           >
             Log in
           </button>
@@ -161,19 +175,19 @@ export default function LoginPage() {
                 id="remember"
                 name="remember"
                 type="checkbox"
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
               />
               <label
                 htmlFor="remember"
-                className="block ml-2 text-sm text-gray-900"
+                className="ml-2 block text-sm text-white/60"
               >
                 Remember me
               </label>
             </div>
-            <div className="text-sm text-center text-gray-500">
+            <div className="text-center text-sm text-white/60">
               Don't have an account?{" "}
               <Link
-                className="text-blue-500 underline"
+                className="text-red-500 underline transition-colors hover:text-red-600"
                 to={{
                   pathname: "/join",
                   search: searchParams.toString(),

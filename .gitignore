@@ -3,6 +3,7 @@ node_modules
 /build
 /public/build
 .env
+.DS_Store
 
 /cypress/screenshots
 /cypress/videos

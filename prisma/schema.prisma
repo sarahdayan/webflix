@@ -11,11 +11,12 @@ model User {
   id    String @id @default(cuid())
   email String @unique
 
+  password       Password?
+  notes          Note[]
+  viewedEpisodes Episode[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  password Password?
-  notes    Note[]
 }
 
 model Password {
@@ -70,7 +71,7 @@ model Movie {
 
 model Show {
   id                  String     @id @default(cuid())
-  tmdbId              Int
+  tmdbId              Int        @unique
   backdropPath        String?
   creators            Credit[]   @relation("Creators")
   cast                Credit[]   @relation("Cast")
@@ -127,6 +128,7 @@ model Episode {
   stillPath      String?
   voteAverage    Float
   voteCount      Int
+  viewedBy       User[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

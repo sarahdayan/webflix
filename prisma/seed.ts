@@ -8,40 +8,6 @@ const prisma = new PrismaClient();
 async function seed() {
   const email = "sarah@algolia.com";
 
-  // cleanup the existing database
-  await prisma.user.delete({ where: { email } }).catch(() => {
-    // no worries if it doesn't exist yet
-  });
-
-  const hashedPassword = await bcrypt.hash("remixiscool", 10);
-
-  const user = await prisma.user.create({
-    data: {
-      email,
-      password: {
-        create: {
-          hash: hashedPassword,
-        },
-      },
-    },
-  });
-
-  await prisma.note.create({
-    data: {
-      title: "My first note",
-      body: "Hello, world!",
-      userId: user.id,
-    },
-  });
-
-  await prisma.note.create({
-    data: {
-      title: "My second note",
-      body: "Hello, world!",
-      userId: user.id,
-    },
-  });
-
   // Create all `Show`s
   // @todo: replace with `createMany` once Prisma supports it for SQLite
   // https://github.com/prisma/prisma/issues/10710
@@ -265,6 +231,69 @@ async function seed() {
       })
     )
   );
+
+  // cleanup the existing database
+  await prisma.user.delete({ where: { email } }).catch(() => {
+    // no worries if it doesn't exist yet
+  });
+
+  const hashedPassword = await bcrypt.hash("remixiscool", 10);
+
+  const user = await prisma.user.create({
+    data: {
+      email,
+      password: {
+        create: {
+          hash: hashedPassword,
+        },
+      },
+      viewedEpisodes: {
+        connect: [
+          { tmdbId: 1198665 },
+          { tmdbId: 1203677 },
+          { tmdbId: 1203679 },
+          { tmdbId: 1203680 },
+          { tmdbId: 1205904 },
+          { tmdbId: 1205905 },
+          { tmdbId: 1205906 },
+          { tmdbId: 1205907 },
+          { tmdbId: 1250983 },
+          { tmdbId: 1250984 },
+          { tmdbId: 1250985 },
+          { tmdbId: 1250986 },
+          { tmdbId: 1250987 },
+          { tmdbId: 1250988 },
+          { tmdbId: 1250989 },
+          { tmdbId: 1250990 },
+          { tmdbId: 1250991 },
+          { tmdbId: 1657328 },
+          { tmdbId: 1657329 },
+          { tmdbId: 1657330 },
+          { tmdbId: 1657331 },
+          { tmdbId: 1657332 },
+          { tmdbId: 1657333 },
+          { tmdbId: 1657334 },
+          { tmdbId: 1657335 },
+        ],
+      },
+    },
+  });
+
+  await prisma.note.create({
+    data: {
+      title: "My first note",
+      body: "Hello, world!",
+      userId: user.id,
+    },
+  });
+
+  await prisma.note.create({
+    data: {
+      title: "My second note",
+      body: "Hello, world!",
+      userId: user.id,
+    },
+  });
 
   console.log(`Database has been seeded. 🌱`);
 }

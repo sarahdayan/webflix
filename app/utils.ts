@@ -2,6 +2,7 @@ import { useMatches } from "@remix-run/react";
 import { useMemo } from "react";
 
 import type { ReturnedGetUser } from "~/session.server";
+import type { ReturnedGetFavoriteShows } from "./models/show.server";
 
 const DEFAULT_REDIRECT = "/";
 
@@ -73,4 +74,16 @@ export function useUser(): ReturnedGetUser {
 
 export function validateEmail(email: unknown): email is string {
   return typeof email === "string" && email.length > 3 && email.includes("@");
+}
+
+export function useOptionalFavoriteShowsWithNewSeasons():
+  | ReturnedGetFavoriteShows
+  | undefined {
+  const data = useMatchesData("root");
+
+  if (!data?.favoriteShowsWithNewSeasons) {
+    return undefined;
+  }
+
+  return data.favoriteShowsWithNewSeasons as ReturnedGetFavoriteShows;
 }

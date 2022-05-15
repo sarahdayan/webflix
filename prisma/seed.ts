@@ -6,7 +6,7 @@ import shows from "./fixtures/shows.json";
 const prisma = new PrismaClient();
 
 async function seed() {
-  const email = "sarah@algolia.com";
+  const email = "sarah@example.org";
 
   // Create all `Show`s
   // @todo: replace with `createMany` once Prisma supports it for SQLite

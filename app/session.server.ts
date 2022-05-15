@@ -25,6 +25,7 @@ const USER_SESSION_KEY = "userId";
 
 export async function getSession(request: Request) {
   const cookie = request.headers.get("Cookie");
+
   return sessionStorage.getSession(cookie);
 }
 
@@ -33,15 +34,22 @@ export async function getUserId(
 ): Promise<User["id"] | undefined> {
   const session = await getSession(request);
   const userId = session.get(USER_SESSION_KEY);
+
   return userId;
 }
 
 export async function getUser(request: Request) {
   const userId = await getUserId(request);
-  if (userId === undefined) return null;
+
+  if (userId === undefined) {
+    return null;
+  }
 
   const user = await getUserById(userId, { include: { viewedEpisodes: true } });
-  if (user) return user;
+
+  if (user) {
+    return user;
+  }
 
   throw await logout(request);
 }
@@ -51,35 +59,43 @@ export async function requireUserId(
   redirectTo: string = new URL(request.url).pathname
 ) {
   const userId = await getUserId(request);
+
   if (!userId) {
     const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
+
     throw redirect(`/login?${searchParams}`);
   }
+
   return userId;
 }
 
 export async function requireUser(request: Request) {
   const userId = await requireUserId(request);
-
   const user = await getUserById(userId, { include: { viewedEpisodes: true } });
-  if (user) return user;
+
+  if (user) {
+    return user;
+  }
 
   throw await logout(request);
 }
+
+type CreateUserSessionParams = {
+  request: Request;
+  userId: string;
+  remember: boolean;
+  redirectTo: string;
+};
 
 export async function createUserSession({
   request,
   userId,
   remember,
   redirectTo,
-}: {
-  request: Request;
-  userId: string;
-  remember: boolean;
-  redirectTo: string;
-}) {
+}: CreateUserSessionParams) {
   const session = await getSession(request);
   session.set(USER_SESSION_KEY, userId);
+
   return redirect(redirectTo, {
     headers: {
       "Set-Cookie": await sessionStorage.commitSession(session, {
@@ -93,6 +109,7 @@ export async function createUserSession({
 
 export async function logout(request: Request) {
   const session = await getSession(request);
+
   return redirect("/", {
     headers: {
       "Set-Cookie": await sessionStorage.destroySession(session),

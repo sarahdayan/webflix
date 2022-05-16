@@ -10,7 +10,6 @@ import { WebflixLogo } from "~/components/logos/webflix";
 const navigation = [
   { name: "Discover", href: "/", current: true },
   { name: "Browse", href: "/", current: false },
-  { name: "Upcoming", href: "/", current: false },
   { name: "Watchlist", href: "/", current: false },
 ];
 
@@ -97,7 +96,7 @@ export default function Index() {
                       </form>
 
                       {/* Profile dropdown */}
-                      {user && (
+                      {user ? (
                         <Menu as="div" className="relative flex-none ml-3">
                           <div>
                             <Menu.Button className="flex text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -128,7 +127,7 @@ export default function Index() {
                                       "block px-4 py-2 text-sm text-gray-700"
                                     )}
                                   >
-                                    Your Profile
+                                    Your profile
                                   </a>
                                 )}
                               </Menu.Item>
@@ -147,20 +146,29 @@ export default function Index() {
                               </Menu.Item>
                               <Menu.Item>
                                 {({ active }) => (
-                                  <a
-                                    href="/"
-                                    className={cx(
-                                      active ? "bg-gray-100" : "",
-                                      "block px-4 py-2 text-sm text-gray-700"
-                                    )}
-                                  >
-                                    Sign out
-                                  </a>
+                                  <form action="/logout" method="post">
+                                    <button
+                                      type="submit"
+                                      className={cx(
+                                        active ? "bg-gray-100" : "",
+                                        "block w-full px-4 py-2 text-left text-sm text-gray-700"
+                                      )}
+                                    >
+                                      Sign out
+                                    </button>
+                                  </form>
                                 )}
                               </Menu.Item>
                             </Menu.Items>
                           </Transition>
                         </Menu>
+                      ) : (
+                        <Link
+                          to={{ pathname: "/login" }}
+                          className="px-4 py-2 ml-3 text-white transition-colors bg-red-500 rounded whitespace-nowrap hover:bg-red-600 focus:bg-red-400"
+                        >
+                          Sign in
+                        </Link>
                       )}
                     </div>
                   </div>

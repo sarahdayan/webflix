@@ -27,24 +27,24 @@ export default function Index() {
           >
             {({ open }) => (
               <>
-                <div className="container mx-auto px-2 sm:px-6 lg:px-8">
-                  <div className="relative flex h-20 items-center justify-between">
+                <div className="container px-2 mx-auto sm:px-6 lg:px-8">
+                  <div className="relative flex items-center justify-between h-20">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                       {/* Mobile menu button*/}
-                      <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-white/50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                      <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-white/50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                         <span className="sr-only">Open main menu</span>
                         {open ? (
-                          <XIcon className="block h-6 w-6" aria-hidden="true" />
+                          <XIcon className="block w-6 h-6" aria-hidden="true" />
                         ) : (
                           <MenuIcon
-                            className="block h-6 w-6"
+                            className="block w-6 h-6"
                             aria-hidden="true"
                           />
                         )}
                       </Disclosure.Button>
                     </div>
-                    <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                      <div className="flex flex-shrink-0 items-center">
+                    <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
+                      <div className="flex items-center flex-shrink-0">
                         <WebflixLogo className="h-6 text-red-600" />
                       </div>
                       <div className="hidden sm:ml-6 sm:block">
@@ -70,20 +70,40 @@ export default function Index() {
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                       <button
                         type="button"
-                        className="rounded-full p-1 text-white/50 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        className="p-1 rounded-full text-white/50 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 md:hidden"
                       >
                         <span className="sr-only">Search</span>
-                        <SearchIcon className="h-6 w-6" aria-hidden="true" />
+                        <SearchIcon className="w-6 h-6" aria-hidden="true" />
                       </button>
+
+                      <form className="relative hidden md:block">
+                        <svg
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
+                          className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-white/60"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        <input
+                          className="w-full h-12 pr-4 text-white bg-transparent border-0 rounded-sm pl-11 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/60 sm:text-sm"
+                          placeholder="Search..."
+                          type="text"
+                        />
+                      </form>
 
                       {/* Profile dropdown */}
                       {user && (
-                        <Menu as="div" className="relative ml-3">
+                        <Menu as="div" className="relative flex-none ml-3">
                           <div>
-                            <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                            <Menu.Button className="flex text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                               <span className="sr-only">Open user menu</span>
                               <img
-                                className="h-8 w-8 flex-none rounded-full"
+                                className="flex-none w-8 h-8 rounded-full"
                                 src={gravatar.url(user.email)}
                                 alt={user.email}
                               />
@@ -98,7 +118,7 @@ export default function Index() {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                           >
-                            <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <Menu.Items className="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                               <Menu.Item>
                                 {({ active }) => (
                                   <a
@@ -147,7 +167,7 @@ export default function Index() {
                 </div>
 
                 <Disclosure.Panel className="sm:hidden">
-                  <div className="space-y-1 px-2 pt-2 pb-3">
+                  <div className="px-2 pt-2 pb-3 space-y-1">
                     {navigation.map((item) => (
                       <Disclosure.Button
                         key={item.name}

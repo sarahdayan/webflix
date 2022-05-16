@@ -2,7 +2,8 @@ import { useMatches } from "@remix-run/react";
 import { useMemo } from "react";
 
 import type { ReturnedGetUser } from "~/session.server";
-import type { ReturnedGetFavoriteShows } from "./models/show.server";
+import type { ReturnedGetFavoriteShows } from "~/models/show.server";
+import type { ShowItem } from "~/types/ShowItem";
 
 const DEFAULT_REDIRECT = "/";
 
@@ -88,6 +89,23 @@ export function useOptionalFavoriteShowsWithNewSeasons():
   return data.favoriteShowsWithNewSeasons as ReturnedGetFavoriteShows;
 }
 
-export function cx(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
+export function cx(
+  ...classNames: Array<string | number | boolean | undefined | null>
+) {
+  return classNames.filter(Boolean).join(" ");
+}
+
+export function isShow(item: Record<string, unknown>): item is ShowItem {
+  return item?.record_type === "show";
+}
+
+export function minutesToHours(minutes: number) {
+  const hours = Math.floor(minutes / 60);
+  const minutesRemaining = minutes % 60;
+
+  if (minutesRemaining === 0) {
+    return `${hours} h`;
+  }
+
+  return `${hours} h ${minutesRemaining} min`;
 }

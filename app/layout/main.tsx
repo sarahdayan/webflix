@@ -22,7 +22,7 @@ const navigation = [
 export function Main({ children, user }: MainProps) {
   return (
     <div className="relative bg-gray-900">
-      <header className="fixed top-0 z-20 w-full">
+      <header className="fixed top-0 z-30 w-full">
         <div>
           <Disclosure
             as="nav"
@@ -87,9 +87,9 @@ export function Main({ children, user }: MainProps) {
                           className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-white/60"
                         >
                           <path
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                            clip-rule="evenodd"
+                            clipRule="evenodd"
                           />
                         </svg>
                         <input

@@ -87,3 +87,7 @@ export function useOptionalFavoriteShowsWithNewSeasons():
 
   return data.favoriteShowsWithNewSeasons as ReturnedGetFavoriteShows;
 }
+
+export function cx(...classes: string[]) {
+  return classes.filter(Boolean).join(" ");
+}

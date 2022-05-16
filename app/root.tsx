@@ -14,11 +14,8 @@ import {
 } from "@remix-run/react";
 
 import { getUser } from "~/session.server";
-import type {
-  ReturnedGetFavoriteShows} from "~/models/show.server";
-import {
-  getFavoriteShows
-} from "~/models/show.server";
+import type { ReturnedGetFavoriteShows } from "~/models/show.server";
+import { getFavoriteShows } from "~/models/show.server";
 
 import type { User } from "@prisma/client";
 import type { ReturnedGetUser } from "~/session.server";
@@ -71,7 +68,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="h-full">
+      <body className="h-full overflow-x-hidden">
         <Outlet />
         <ScrollRestoration />
         <Scripts />

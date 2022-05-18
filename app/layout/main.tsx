@@ -21,7 +21,7 @@ const navigation = [
 
 export function Main({ children, user }: MainProps) {
   return (
-    <div className="relative bg-gray-900">
+    <div className="relative min-h-full bg-gray-900">
       <header className="fixed top-0 z-30 w-full">
         <div>
           <Disclosure

@@ -14,6 +14,7 @@ import { safeRedirect, validateEmail } from "~/utils";
 
 import { WebflixLogo } from "~/components/logos/webflix";
 import background from "~/images/background.jpg";
+import { Main } from "~/layout/main";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -95,98 +96,95 @@ export default function Join() {
   }, [actionData]);
 
   return (
-    <div
-      className="relative flex min-h-full flex-col bg-cover bg-top"
-      style={{ backgroundImage: `url(${background})` }}
-    >
-      <header className="absolute top-0 p-4">
-        <Link to={{ pathname: "/" }}>
-          <WebflixLogo className="h-10 text-red-600" />
-        </Link>
-      </header>
-      <div className="mx-auto mt-48 w-full max-w-md bg-black/80 p-8">
-        <h2 className="mb-8 text-2xl font-bold text-white">
-          Create a new account
-        </h2>
+    <Main>
+      <div
+        className="flex flex-col min-h-screen bg-top bg-cover"
+        style={{ backgroundImage: `url(${background})` }}
+      >
+        <div className="w-full max-w-md p-8 mx-auto mt-48 bg-black/80">
+          <h2 className="mb-8 text-2xl font-bold text-white">
+            Create a new account
+          </h2>
 
-        <Form method="post" className="space-y-6">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-white"
-            >
-              Email address
-            </label>
-            <div className="mt-1">
-              <input
-                ref={emailRef}
-                id="email"
-                required
-                autoFocus={true}
-                name="email"
-                type="email"
-                autoComplete="off"
-                aria-invalid={actionData?.errors?.email ? true : undefined}
-                aria-describedby="email-error"
-                className="w-full rounded border-0 px-2 py-1 text-lg"
-              />
-              {actionData?.errors?.email && (
-                <div className="pt-1 text-red-700" id="email-error">
-                  {actionData.errors.email}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-white"
-            >
-              Password
-            </label>
-            <div className="mt-1">
-              <input
-                id="password"
-                ref={passwordRef}
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                aria-invalid={actionData?.errors?.password ? true : undefined}
-                aria-describedby="password-error"
-                className="w-full rounded border-0 px-2 py-1 text-lg"
-              />
-              {actionData?.errors?.password && (
-                <div className="pt-1 text-red-700" id="password-error">
-                  {actionData.errors.password}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <input type="hidden" name="redirectTo" value={redirectTo} />
-          <button
-            type="submit"
-            className="w-full rounded bg-red-500 px-4 py-2 text-white transition-colors hover:bg-red-600 focus:bg-red-400"
-          >
-            Create Account
-          </button>
-          <div className="flex items-center justify-center">
-            <div className="text-center text-sm text-white/60">
-              Already have an account?{" "}
-              <Link
-                className="text-red-500 underline transition-colors hover:text-red-600"
-                to={{
-                  pathname: "/login",
-                  search: searchParams.toString(),
-                }}
+          <Form method="post" className="space-y-6">
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-white"
               >
-                Log in
-              </Link>
+                Email address
+              </label>
+              <div className="mt-1">
+                <input
+                  ref={emailRef}
+                  id="email"
+                  required
+                  autoFocus={true}
+                  name="email"
+                  type="email"
+                  autoComplete="off"
+                  aria-invalid={actionData?.errors?.email ? true : undefined}
+                  aria-describedby="email-error"
+                  className="w-full px-2 py-1 text-lg border-0 rounded"
+                />
+                {actionData?.errors?.email && (
+                  <div className="pt-1 text-red-700" id="email-error">
+                    {actionData.errors.email}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        </Form>
+
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-white"
+              >
+                Password
+              </label>
+              <div className="mt-1">
+                <input
+                  id="password"
+                  ref={passwordRef}
+                  name="password"
+                  type="password"
+                  autoComplete="new-password"
+                  aria-invalid={actionData?.errors?.password ? true : undefined}
+                  aria-describedby="password-error"
+                  className="w-full px-2 py-1 text-lg border-0 rounded"
+                />
+                {actionData?.errors?.password && (
+                  <div className="pt-1 text-red-700" id="password-error">
+                    {actionData.errors.password}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <input type="hidden" name="redirectTo" value={redirectTo} />
+            <button
+              type="submit"
+              className="w-full px-4 py-2 text-white transition-colors bg-red-500 rounded hover:bg-red-600 focus:bg-red-400"
+            >
+              Create Account
+            </button>
+            <div className="flex items-center justify-center">
+              <div className="text-sm text-center text-white/60">
+                Already have an account?{" "}
+                <Link
+                  className="text-red-500 underline transition-colors hover:text-red-600"
+                  to={{
+                    pathname: "/login",
+                    search: searchParams.toString(),
+                  }}
+                >
+                  Log in
+                </Link>
+              </div>
+            </div>
+          </Form>
+        </div>
       </div>
-    </div>
+    </Main>
   );
 }

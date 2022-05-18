@@ -4,8 +4,8 @@ import { prisma } from "~/db.server";
 
 export type { Show } from "@prisma/client";
 
-export async function getShowById(id: Show["id"]) {
-  return prisma.show.findUnique({ where: { id } });
+export async function getShowByTmdbId(tmdbId: Show["tmdbId"]) {
+  return prisma.show.findUnique({ where: { tmdbId } });
 }
 
 export type ReturnedGetFavoriteShows = Awaited<

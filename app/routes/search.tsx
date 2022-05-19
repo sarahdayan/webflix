@@ -5,7 +5,6 @@ import {
   InstantSearchSSRProvider,
   RefinementList,
   useInfiniteHits,
-  useSearchBox,
 } from "react-instantsearch-hooks-web";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
@@ -35,6 +34,7 @@ import type { BaseHit, Hit, UiState } from "instantsearch.js";
 import type { LoaderFunction } from "@remix-run/server-runtime";
 import type { MovieItem } from "~/types/MovieItem";
 import type { ShowItem } from "~/types/ShowItem";
+import { VirtualSearchBox } from "~/components/virtual-search-box";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
@@ -234,10 +234,4 @@ function InfiniteHitsScroll<THit extends BaseHit = BaseHit>({
       )}
     </>
   );
-}
-
-function VirtualSearchBox() {
-  useSearchBox();
-
-  return null;
 }

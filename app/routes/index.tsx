@@ -3,8 +3,10 @@ import { Transition } from "@headlessui/react";
 import {
   Configure,
   InstantSearch,
+  InstantSearchSSRProvider,
   useHits,
 } from "react-instantsearch-hooks-web";
+import { useLoaderData } from "@remix-run/react";
 
 import {
   cx,
@@ -23,18 +25,37 @@ import {
 import type { Hit } from "instantsearch.js";
 import type { ShowItem } from "~/types/ShowItem";
 import type { MovieItem } from "~/types/MovieItem";
+import type { LoaderFunction } from "@remix-run/server-runtime";
+import { getServerState } from "react-instantsearch-hooks-server";
+import { VirtualSearchBox } from "~/components/virtual-search-box";
+
+export const loader: LoaderFunction = async () => {
+  const serverState = await getServerState(<Hero />);
+
+  return { serverState };
+};
 
 export default function Index() {
+  const { serverState } = useLoaderData();
   const user = useOptionalUser();
   const favoriteShows = useOptionalFavoriteShowsWithNewSeasons();
 
   return (
     <Main user={user} searchFallbackData={{ favoriteShows }}>
-      <InstantSearch searchClient={searchClient} indexName={ALGOLIA_INDEX_NAME}>
-        <Configure hitsPerPage={20} filters={ALGOLIA_FILTERS} />
-        <Preview />
-      </InstantSearch>
+      <InstantSearchSSRProvider {...serverState}>
+        <Hero />
+      </InstantSearchSSRProvider>
     </Main>
+  );
+}
+
+function Hero() {
+  return (
+    <InstantSearch searchClient={searchClient} indexName={ALGOLIA_INDEX_NAME}>
+      <Configure hitsPerPage={20} filters={ALGOLIA_FILTERS} />
+      <VirtualSearchBox />
+      <Preview />
+    </InstantSearch>
   );
 }
 

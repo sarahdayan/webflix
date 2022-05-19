@@ -169,11 +169,7 @@ function PreviewItem({ item, isSelected, onClick }: PreviewItemProps) {
 
   useEffect(() => {
     if (isSelected) {
-      ref.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "start",
-      });
+      ref.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [isSelected]);
 

@@ -10,6 +10,10 @@ module.exports = {
     plugin(({ addVariant }) => {
       addVariant("selected", ".selected &");
       addVariant("group-item-hover", ".group-item:hover &");
+      addVariant("aria-selected", '[aria-selected="true"] &');
+      addVariant("aria-unselected", '[aria-selected="false"] &');
+      addVariant("child-mark", "& mark");
+      addVariant("hidden", "[hidden]&");
     }),
   ],
 };

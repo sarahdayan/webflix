@@ -15,7 +15,14 @@ import { getServerState } from "react-instantsearch-hooks-server";
 import { HeartIcon, PlusIcon } from "@heroicons/react/outline";
 
 import { ImageWithLoader } from "~/components/image-with-loader";
-import { cx, isShow, minutesToHours, useOptionalUser } from "~/utils";
+import {
+  cx,
+  getUrl,
+  isShow,
+  minutesToHours,
+  useOptionalFavoriteShowsWithNewSeasons,
+  useOptionalUser,
+} from "~/utils";
 import { searchClient } from "~/search-client";
 import { ALGOLIA_INDEX_NAME, TMDB_IMAGE_BASE_URL } from "~/constants";
 import { Play } from "~/components/icons/play";
@@ -35,9 +42,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Index() {
   const { serverState, url } = useLoaderData();
   const user = useOptionalUser();
+  const favoriteShows = useOptionalFavoriteShowsWithNewSeasons();
 
   return (
-    <Main user={user}>
+    <Main user={user} searchFallbackData={{ favoriteShows }}>
       <main className="relative top-0 flex flex-col w-full min-h-screen pt-40 pb-10 bg-center bg-cover">
         <div className="container relative z-20 px-2 mx-auto text-white sm:px-6 lg:px-8">
           <InstantSearchSSRProvider {...serverState}>
@@ -116,7 +124,7 @@ type HitProps = {
 };
 
 function ShowOrMovieHit({ hit }: HitProps) {
-  const url = `/watch/${hit.objectID.replace("_", "/")}`;
+  const url = getUrl(hit);
 
   return (
     <>
@@ -205,7 +213,7 @@ function InfiniteHitsScroll<THit extends BaseHit = BaseHit>({
 
   return (
     <>
-      <ul className="grid grid-cols-4 gap-4 md:grid-cols-6">
+      <ul className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-6">
         {hits.map((hit) => (
           <li
             key={hit.objectID}

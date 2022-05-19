@@ -41,6 +41,17 @@ export async function getFavoriteShows(user: User) {
             },
           },
         },
+        genres: true,
+        cast: {
+          include: {
+            person: true,
+          },
+        },
+        videos: {
+          orderBy: {
+            id: "desc",
+          },
+        },
       },
     })
     .then((shows) => {

@@ -1,9 +1,12 @@
 import { useMatches } from "@remix-run/react";
 import { useMemo } from "react";
+import { BaseItem } from "@algolia/autocomplete-core";
 
+import type { Hit } from "instantsearch.js";
 import type { ReturnedGetUser } from "~/session.server";
 import type { ReturnedGetFavoriteShows } from "~/models/show.server";
 import type { ShowItem } from "~/types/ShowItem";
+import type { MovieItem } from "~/types/MovieItem";
 
 const DEFAULT_REDIRECT = "/";
 
@@ -108,4 +111,12 @@ export function minutesToHours(minutes: number) {
   }
 
   return `${hours} h ${minutesRemaining} min`;
+}
+
+export function isMovie(item: Record<string, unknown>): item is MovieItem {
+  return item?.record_type === "movie";
+}
+
+export function getUrl(item: Hit<BaseItem>) {
+  return `/watch/${item.objectID.replace("_", "/")}`;
 }

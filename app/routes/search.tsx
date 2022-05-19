@@ -24,7 +24,11 @@ import {
   useOptionalUser,
 } from "~/utils";
 import { searchClient } from "~/search-client";
-import { ALGOLIA_INDEX_NAME, TMDB_IMAGE_BASE_URL } from "~/constants";
+import {
+  ALGOLIA_FILTERS,
+  ALGOLIA_INDEX_NAME,
+  TMDB_IMAGE_BASE_URL,
+} from "~/constants";
 import { Play } from "~/components/icons/play";
 
 import type { BaseHit, Hit, UiState } from "instantsearch.js";
@@ -96,7 +100,7 @@ function Search({ url }: SearchProps) {
         },
       }}
     >
-      <Configure hitsPerPage={30} filters="spoken_languages:English" />
+      <Configure hitsPerPage={30} filters={ALGOLIA_FILTERS} />
       <VirtualSearchBox />
       <div className="flex mb-5 space-x-3 overflow-x-scroll touch-pan-x">
         <span className="relative -top-px mt-2.5 text-gray-500">Genres</span>

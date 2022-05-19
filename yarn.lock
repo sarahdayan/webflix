@@ -7117,13 +7117,6 @@ react-dom@^17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
-react-hotkeys-hook@3.4.6:
-  version "3.4.6"
-  resolved "https://registry.yarnpkg.com/react-hotkeys-hook/-/react-hotkeys-hook-3.4.6.tgz#21eda8e97121583a14056479e3eea9e51d2e2a69"
-  integrity sha512-SiGKHnauaAQglRA7qeiW5LTa0KoT2ssv8YGYKZQoM3P9v5JFEHJdXOSFml1N6K86oKQ8dLCLlxqBqGlSJWGmxQ==
-  dependencies:
-    hotkeys-js "3.9.3"
-
 react-instantsearch-hooks-server@6.24.3:
   version "6.24.3"
   resolved "https://registry.yarnpkg.com/react-instantsearch-hooks-server/-/react-instantsearch-hooks-server-6.24.3.tgz#a7057f59d6cf1dd5b8c2e72b36f0dea2b1eaf795"

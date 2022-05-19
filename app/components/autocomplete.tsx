@@ -1,15 +1,16 @@
-import { BaseItem } from "@algolia/autocomplete-core";
 import { autocomplete } from "@algolia/autocomplete-js";
 import { SearchIcon } from "@heroicons/react/outline";
 import { createElement, Fragment, useEffect, useRef, useState } from "react";
 import { render } from "react-dom";
-import { useHotkeys } from "react-hotkeys-hook";
 
+import { useHotkeys } from "~/hooks/useHotkeys";
 import { cx } from "~/utils";
 
+import type { BaseItem } from "@algolia/autocomplete-core";
 import type {
   AutocompleteApi,
   AutocompleteOptions,
+  AutocompleteState,
 } from "@algolia/autocomplete-js";
 
 export function Autocomplete<TItem extends BaseItem>(
@@ -17,6 +18,15 @@ export function Autocomplete<TItem extends BaseItem>(
 ) {
   const containerRef = useRef(null);
   const searchRef = useRef<AutocompleteApi<TItem> | null>(null);
+  const [state, setState] = useState<AutocompleteState<TItem>>({
+    collections: [],
+    completion: null,
+    context: {},
+    isOpen: false,
+    query: "",
+    activeItemId: null,
+    status: "idle",
+  });
 
   useEffect(() => {
     if (!containerRef.current) {
@@ -52,6 +62,10 @@ export function Autocomplete<TItem extends BaseItem>(
           "flex-1 flex flex-col divide-y divide-gray-500 divide-opacity-20",
       },
       ...props,
+      onStateChange(params) {
+        props.onStateChange?.(params);
+        setState(params.state);
+      },
     });
 
     return () => {
@@ -59,11 +73,15 @@ export function Autocomplete<TItem extends BaseItem>(
     };
   }, [props]);
 
-  useHotkeys("cmd+k, ctrl+k", (event) => {
-    event.preventDefault();
+  useHotkeys(
+    "cmd+k, ctrl+k",
+    (event) => {
+      event.preventDefault();
 
-    searchRef.current?.setIsOpen(true);
-  });
+      searchRef.current?.setIsOpen(!state.isOpen);
+    },
+    [state.isOpen]
+  );
 
   return (
     <>

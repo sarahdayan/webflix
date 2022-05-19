@@ -121,7 +121,6 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
                         defaultActiveItemId={0}
                         placeholder="Search for movies, shows, actors, etc."
                         initialState={{ query: initialQuery }}
-                        debug={true}
                         getSources={({ query }) => [
                           {
                             sourceId: "new_sesons",

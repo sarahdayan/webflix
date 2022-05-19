@@ -1,6 +1,6 @@
 import { useMatches } from "@remix-run/react";
 import { useMemo } from "react";
-import { BaseItem } from "@algolia/autocomplete-core";
+import type { BaseItem } from "@algolia/autocomplete-core";
 
 import type { Hit } from "instantsearch.js";
 import type { ReturnedGetUser } from "~/session.server";

@@ -73,25 +73,25 @@ function Preview() {
           <img
             src={`${TMDB_IMAGE_BASE_URL}original${hit.backdrop_path}`}
             alt={hit.title}
-            className="absolute inset-0 object-cover w-full h-full opacity-30 xl:opacity-60"
+            className="absolute inset-0 h-full w-full object-cover opacity-30 xl:opacity-60"
           />
         </Transition>
       ))}
-      <div className="relative z-20 w-full px-6 mx-auto lg:container lg:px-8">
+      <div className="relative z-20 mx-auto w-full px-6 lg:container lg:px-8">
         <div className="flex flex-col justify-end">
-          <div className="flex flex-col justify-center mt-20 space-y-10 aspect-video lg:space-y-12 xl:mt-0">
+          <div className="mt-20 flex aspect-video flex-col justify-center space-y-10 lg:space-y-12 xl:mt-0">
             <div className="space-y-6">
               <div>
                 <h2 className="mb-2 text-5xl font-bold leading-normal text-white line-clamp-1">
                   {selectedHit.title}
                 </h2>
                 <div className="flex space-x-2 text-sm text-white">
-                  <p className="flex items-center mb-6 space-x-3 text-sm">
+                  <p className="mb-6 flex items-center space-x-3 text-sm">
                     {releaseDate && (
                       <span>{new Date(releaseDate).getFullYear()}</span>
                     )}
                     {releaseDate && (
-                      <span className="flex-none inline-block w-px h-4 bg-white/30" />
+                      <span className="inline-block h-4 w-px flex-none bg-white/30" />
                     )}
                     <span className="line-clamp-1">
                       {selectedHit.genres.join(", ")}
@@ -105,17 +105,17 @@ function Preview() {
                 </p>
               </div>
               <div className="flex space-x-4">
-                <button className="flex-none px-6 py-3 font-bold text-white transition-colors bg-red-500 rounded-full shadow-lg shadow-red-500/50 hover:bg-red-600 focus:bg-red-400">
+                <button className="flex-none rounded-full bg-red-500 px-6 py-3 font-bold text-white shadow-lg shadow-red-500/50 transition-colors hover:bg-red-600 focus:bg-red-400">
                   Watch now
                 </button>
-                <button className="flex-none px-6 py-3 font-bold text-white transition-colors bg-gray-600 rounded-full shadow-lg shadow-gray-600/50 hover:bg-gray-700 focus:bg-gray-500">
+                <button className="flex-none rounded-full bg-gray-600 px-6 py-3 font-bold text-white shadow-lg shadow-gray-600/50 transition-colors hover:bg-gray-700 focus:bg-gray-500">
                   More info
                 </button>
               </div>
             </div>
             <div className="w-full">
               <h3 className="mb-2 text-2xl font-bold text-white">Popular</h3>
-              <ul className="flex space-x-4 overflow-x-scroll list-none touch-pan-x">
+              <ul className="flex touch-pan-x list-none space-x-4 overflow-x-scroll">
                 {hits.map((hit) => {
                   const isSelected = selectedHit.objectID === hit.objectID;
 
@@ -160,10 +160,10 @@ function PreviewItem({ item, isSelected, onClick }: PreviewItemProps) {
     <li ref={ref}>
       <button
         onClick={onClick}
-        className="relative pb-5 mb-5 space-y-2 group"
+        className="group relative mb-5 space-y-2 pb-5"
         title={item.title}
       >
-        <div className="bg-black rounded">
+        <div className="rounded bg-black">
           <img
             className={cx(
               "h-auto w-40 max-w-none rounded transition-opacity group-hover:opacity-100",

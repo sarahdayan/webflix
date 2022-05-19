@@ -50,8 +50,8 @@ export default function Index() {
 
   return (
     <Main user={user} searchFallbackData={{ favoriteShows }}>
-      <main className="relative top-0 flex flex-col w-full min-h-screen pt-40 pb-10 bg-center bg-cover">
-        <div className="container relative z-20 px-2 mx-auto text-white sm:px-6 lg:px-8">
+      <main className="relative top-0 flex min-h-screen w-full flex-col bg-cover bg-center pt-40 pb-10">
+        <div className="container relative z-20 mx-auto px-2 text-white sm:px-6 lg:px-8">
           <InstantSearchSSRProvider {...serverState}>
             <Search url={url} />
           </InstantSearchSSRProvider>
@@ -102,7 +102,7 @@ function Search({ url }: SearchProps) {
     >
       <Configure hitsPerPage={30} filters={ALGOLIA_FILTERS} />
       <VirtualSearchBox />
-      <div className="flex mb-5 space-x-3 overflow-x-scroll touch-pan-x">
+      <div className="mb-5 flex touch-pan-x space-x-3 overflow-x-scroll">
         <span className="relative -top-px mt-2.5 text-gray-500">Genres</span>
         <RefinementList
           attribute="genres"
@@ -148,15 +148,15 @@ function ShowOrMovieHit({ hit }: HitProps) {
           )}
         />
       </Link>
-      <div className="absolute bottom-0 left-0 right-0 p-4 transition-opacity scale-0 bg-gray-800 opacity-0 group-item-hover:scale-100 group-item-hover:opacity-100 group-item-hover:delay-500">
-        <ul className="flex mb-2 space-x-1">
+      <div className="absolute bottom-0 left-0 right-0 scale-0 bg-gray-800 p-4 opacity-0 transition-opacity group-item-hover:scale-100 group-item-hover:opacity-100 group-item-hover:delay-500">
+        <ul className="mb-2 flex space-x-1">
           <li>
             <Link
               to={url}
               title={`Play this ${hit.record_type}`}
               className="group block flex-none rounded-full border-2 border-white/40 bg-gray-700 p-1.5 transition-colors hover:border-white/100"
             >
-              <Play className="relative w-3 h-3 transition-colors left-px fill-white/0 stroke-white group-hover:fill-white/100" />
+              <Play className="relative left-px h-3 w-3 fill-white/0 stroke-white transition-colors group-hover:fill-white/100" />
             </Link>
           </li>
           <li>
@@ -164,7 +164,7 @@ function ShowOrMovieHit({ hit }: HitProps) {
               title="Add to my list"
               className="group flex-none rounded-full border-2 border-white/40 bg-gray-700 p-1.5 transition-colors hover:border-white/100"
             >
-              <PlusIcon className="w-3 h-3 transition-colors fill-white/0 stroke-white group-hover:fill-white/100" />
+              <PlusIcon className="h-3 w-3 fill-white/0 stroke-white transition-colors group-hover:fill-white/100" />
             </button>
           </li>
           <li>
@@ -172,17 +172,17 @@ function ShowOrMovieHit({ hit }: HitProps) {
               title="I liked this"
               className="group flex-none rounded-full border-2 border-white/40 bg-gray-700 p-1.5 transition-colors hover:border-white/100"
             >
-              <HeartIcon className="w-3 h-3 transition-colors fill-white/0 stroke-white group-hover:fill-white/100" />
+              <HeartIcon className="h-3 w-3 fill-white/0 stroke-white transition-colors group-hover:fill-white/100" />
             </button>
           </li>
         </ul>
-        <h2 className="mb-1 text-sm font-semibold truncate">{hit.title}</h2>
+        <h2 className="mb-1 truncate text-sm font-semibold">{hit.title}</h2>
         <p className="mb-1 text-xs text-gray-400">
           {isShow(hit)
             ? `${hit.seasons.length} season${hit.seasons.length > 1 ? "s" : ""}`
             : minutesToHours(hit.runtime)}
         </p>
-        <ul className="flex space-x-1 text-xs font-medium text-gray-100 truncate">
+        <ul className="flex space-x-1 truncate text-xs font-medium text-gray-100">
           {hit.genres.slice(0, 3).map((genre) => (
             <span
               key={genre}

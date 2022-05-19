@@ -1,9 +1,6 @@
 import React, { Fragment } from "react";
-import {
-  AutocompleteComponents,
-  getAlgoliaFacets,
-  getAlgoliaResults,
-} from "@algolia/autocomplete-js";
+import type { AutocompleteComponents } from "@algolia/autocomplete-js";
+import { getAlgoliaFacets, getAlgoliaResults } from "@algolia/autocomplete-js";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   ArrowDownIcon,
@@ -13,7 +10,7 @@ import {
 } from "@heroicons/react/outline";
 import { Link } from "@remix-run/react";
 import gravatar from "gravatar";
-import { Hit } from "instantsearch.js";
+import type { Hit } from "instantsearch.js";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "remix";
 
@@ -29,7 +26,7 @@ import type { ShowItem } from "~/types/ShowItem";
 import type { ActorItem } from "~/types/ActorItem";
 import { YouTubeVideo } from "~/components/youtube-video";
 import { CornerDownLeft } from "~/components/icons/corner-down-left";
-import { ReturnedGetFavoriteShows } from "~/models/show.server";
+import type { ReturnedGetFavoriteShows } from "~/models/show.server";
 import type {
   Credit,
   Episode,
@@ -273,7 +270,11 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
                                 return <SourceHeading>Actors</SourceHeading>;
                               },
                               item({ item }) {
-                                return <ActorItem item={item as ActorItem} />;
+                                return (
+                                  <ActorOrDirectorItem
+                                    item={item as ActorItem}
+                                  />
+                                );
                               },
                             },
                           },
@@ -507,7 +508,7 @@ type ActorItemProps = {
   item: ActorItem;
 };
 
-function ActorItem({ item }: ActorItemProps) {
+function ActorOrDirectorItem({ item }: ActorItemProps) {
   const [name, image] = item.label.split("||");
 
   return (

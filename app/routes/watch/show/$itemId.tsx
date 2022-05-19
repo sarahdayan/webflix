@@ -39,11 +39,11 @@ export default function Page() {
       enterTo="scale-100 opacity-100"
       leaveFrom="scale-100 opacity-100"
       leaveTo="scale-0 opacity-0"
-      className="relative flex items-center justify-center w-screen h-screen text-white transition-all origin-center"
+      className="relative flex h-screen w-screen origin-center items-center justify-center text-white transition-all"
     >
       <ImageWithLoader
         src={`${TMDB_IMAGE_BASE_URL}original${show.backdropPath}`}
-        className="absolute inset-0 object-cover w-full h-full"
+        className="absolute inset-0 h-full w-full object-cover"
         fallback={({ isLoading }) => (
           <div
             className={cx(
@@ -55,7 +55,7 @@ export default function Page() {
           </div>
         )}
       />
-      <div className="absolute flex-none w-12 h-12 text-red-600 -translate-y-1/2 -t6anslate-x-1/2 top-1/2 left-1/2">
+      <div className="-t6anslate-x-1/2 absolute top-1/2 left-1/2 h-12 w-12 flex-none -translate-y-1/2 text-red-600">
         <Spinner className="animate-spin" aria-hidden="true" />
       </div>
     </Transition>

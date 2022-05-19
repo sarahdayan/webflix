@@ -1,4 +1,4 @@
-type SpinnerProps = React.ComponentProps<'svg'>;
+type SpinnerProps = React.ComponentProps<"svg">;
 
 export function Spinner(props: SpinnerProps) {
   return (

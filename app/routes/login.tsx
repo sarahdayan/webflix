@@ -96,10 +96,10 @@ export default function LoginPage() {
   return (
     <Main>
       <div
-        className="flex flex-col min-h-screen bg-top bg-cover"
+        className="flex min-h-screen flex-col bg-cover bg-top"
         style={{ backgroundImage: `url(${background})` }}
       >
-        <div className="w-full max-w-md p-8 mx-auto mt-48 bg-black/80">
+        <div className="mx-auto mt-48 w-full max-w-md bg-black/80 p-8">
           <h2 className="mb-8 text-2xl font-bold text-white">
             Sign in to your account
           </h2>
@@ -123,7 +123,7 @@ export default function LoginPage() {
                   autoComplete="off"
                   aria-invalid={actionData?.errors?.email ? true : undefined}
                   aria-describedby="email-error"
-                  className="w-full px-2 py-1 text-lg bg-white border-0 rounded"
+                  className="w-full rounded border-0 bg-white px-2 py-1 text-lg"
                 />
                 {actionData?.errors?.email && (
                   <div className="pt-1 text-red-700" id="email-error">
@@ -149,7 +149,7 @@ export default function LoginPage() {
                   autoComplete="current-password"
                   aria-invalid={actionData?.errors?.password ? true : undefined}
                   aria-describedby="password-error"
-                  className="w-full px-2 py-1 text-lg bg-white border-0 rounded"
+                  className="w-full rounded border-0 bg-white px-2 py-1 text-lg"
                 />
                 {actionData?.errors?.password && (
                   <div className="pt-1 text-red-700" id="password-error">
@@ -162,7 +162,7 @@ export default function LoginPage() {
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <button
               type="submit"
-              className="w-full px-4 py-2 text-white transition-colors bg-red-500 rounded hover:bg-red-600 focus:bg-red-400"
+              className="w-full rounded bg-red-500 px-4 py-2 text-white transition-colors hover:bg-red-600 focus:bg-red-400"
             >
               Log in
             </button>
@@ -172,16 +172,16 @@ export default function LoginPage() {
                   id="remember"
                   name="remember"
                   type="checkbox"
-                  className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                  className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
                 />
                 <label
                   htmlFor="remember"
-                  className="block ml-2 text-sm text-white/60"
+                  className="ml-2 block text-sm text-white/60"
                 >
                   Remember me
                 </label>
               </div>
-              <div className="text-sm text-center text-white/60">
+              <div className="text-center text-sm text-white/60">
                 Don't have an account?{" "}
                 <Link
                   className="text-red-500 underline transition-colors hover:text-red-600"

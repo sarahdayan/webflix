@@ -90,7 +90,7 @@ export function Autocomplete<TItem extends BaseItem>(
         query={props.initialState?.query}
       />
 
-      <div className="fixed inset-0 z-20 overflow-y-auto pointer-events-none md:p-6 lg:p-10">
+      <div className="pointer-events-none fixed inset-0 z-20 overflow-y-auto md:p-6 lg:p-10">
         <div className="flex items-end justify-center sm:block sm:p-0">
           <div ref={containerRef} />
         </div>
@@ -115,17 +115,17 @@ function SearchButton({ onClick, query }: SearchButtonProps) {
     <>
       <button
         onClick={onClick}
-        className="p-1 rounded-full text-white/50 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 md:hidden"
+        className="rounded-full p-1 text-white/50 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 md:hidden"
       >
         <span className="sr-only">Search</span>
-        <SearchIcon className="w-6 h-6" aria-hidden="true" />
+        <SearchIcon className="h-6 w-6" aria-hidden="true" />
       </button>
       {/*
         If the page takes a while to hydrate (e.g., slow connections) we display
         an HTML form so the search is still usable without JavaScript.
       */}
       {isMounted ? (
-        <button onClick={onClick} className="relative hidden group md:block">
+        <button onClick={onClick} className="group relative hidden md:block">
           <SearchIcon
             className="pointer-events-none absolute top-2.5 left-4 h-5 w-5 text-white/60 transition-colors group-hover:text-white"
             aria-hidden="true"
@@ -146,7 +146,7 @@ function SearchButton({ onClick, query }: SearchButtonProps) {
             aria-hidden="true"
           />
           <input
-            className="w-full h-10 pr-4 text-white bg-transparent border-0 rounded-sm pl-11 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/60 sm:text-sm"
+            className="h-10 w-full rounded-sm border-0 bg-transparent pr-4 pl-11 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/60 sm:text-sm"
             placeholder="Search..."
             type="text"
             defaultValue={query}

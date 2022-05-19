@@ -12,7 +12,6 @@ import { getUserId, createUserSession } from "~/session.server";
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
 
-import { WebflixLogo } from "~/components/logos/webflix";
 import background from "~/images/background.jpg";
 import { Main } from "~/layout/main";
 

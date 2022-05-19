@@ -50,6 +50,7 @@
     "react-instantsearch-hooks-server": "6.24.3",
     "react-instantsearch-hooks-web": "6.24.3",
     "react-intersection-observer": "9.1.0",
+    "react-use": "17.3.2",
     "remix": "1.4.3",
     "tiny-invariant": "^1.2.0"
   },

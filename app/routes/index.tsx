@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Transition } from "@headlessui/react";
 import {
   Configure,
   InstantSearch,
   useHits,
 } from "react-instantsearch-hooks-web";
+import { useHarmonicIntervalFn } from "react-use";
 
 import {
   cx,
@@ -39,16 +40,15 @@ export default function Index() {
 }
 
 function Preview() {
-  const { hits } = useHits<Hit<ShowItem> | Hit<MovieItem>>();
-  const [selectedHit, setSelectedHit] = useState<
-    Hit<MovieItem> | Hit<ShowItem> | null
-  >(null);
+  const { hits } = useHits<Hit<ShowItem | MovieItem>>();
+  const [selectedHitIndex, setSelectedHitIndex] = useState(0);
+  const selectedHit = hits[selectedHitIndex];
 
-  useEffect(() => {
-    if (!selectedHit) {
-      setSelectedHit(hits[0]);
-    }
-  }, [hits]);
+  useHarmonicIntervalFn(() => {
+    const index = selectedHitIndex < hits.length - 1 ? selectedHitIndex + 1 : 0;
+
+    setSelectedHitIndex(index);
+  }, 5000);
 
   if (!selectedHit) {
     return null;
@@ -115,40 +115,19 @@ function Preview() {
                 </button>
               </div>
             </div>
-            <div className="w-full overflow-x-scroll touch-pan-x">
+            <div className="w-full">
               <h3 className="mb-2 text-2xl font-bold text-white">Popular</h3>
-              <ul className="flex space-x-4 list-none">
-                {hits.map((hit) => {
+              <ul className="flex space-x-4 overflow-x-scroll list-none touch-pan-x">
+                {hits.map((hit, index) => {
                   const isSelected = selectedHit.objectID === hit.objectID;
 
                   return (
-                    <li key={hit.objectID}>
-                      <button
-                        onClick={() => setSelectedHit(hit)}
-                        className="relative pb-5 mb-5 space-y-2 group"
-                        title={hit.title}
-                      >
-                        <div className="bg-black rounded">
-                          <img
-                            className={cx(
-                              "h-auto w-40 max-w-none rounded transition-opacity group-hover:opacity-100",
-                              isSelected ? "opacity-100" : "opacity-60"
-                            )}
-                            src={`${TMDB_IMAGE_BASE_URL}w185${hit.backdrop_path}`}
-                            alt={hit.title}
-                          />
-                        </div>
-                        <h4 className="font-bold text-white line-clamp-1">
-                          {hit.title}
-                        </h4>
-                        <div
-                          className={cx(
-                            "absolute bottom-0 h-1 w-full rounded-full bg-red-600 transition-transform",
-                            isSelected ? "scale-x-100" : "scale-x-0"
-                          )}
-                        />
-                      </button>
-                    </li>
+                    <PreviewItem
+                      key={hit.objectID}
+                      item={hit}
+                      isSelected={isSelected}
+                      onClick={() => setSelectedHitIndex(index)}
+                    />
                   );
                 })}
               </ul>
@@ -157,5 +136,53 @@ function Preview() {
         </div>
       </div>
     </main>
+  );
+}
+
+type PreviewItemProps = {
+  item: Hit<ShowItem | MovieItem>;
+  isSelected: boolean;
+  onClick(): void;
+};
+
+function PreviewItem({ item, isSelected, onClick }: PreviewItemProps) {
+  const ref = useRef<HTMLLIElement | null>(null);
+
+  useEffect(() => {
+    if (isSelected) {
+      ref.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "start",
+      });
+    }
+  }, [isSelected]);
+
+  return (
+    <li ref={ref}>
+      <button
+        onClick={onClick}
+        className="relative pb-5 mb-5 space-y-2 group"
+        title={item.title}
+      >
+        <div className="bg-black rounded">
+          <img
+            className={cx(
+              "h-auto w-40 max-w-none rounded transition-opacity group-hover:opacity-100",
+              isSelected ? "opacity-100" : "opacity-60"
+            )}
+            src={`${TMDB_IMAGE_BASE_URL}w185${item.backdrop_path}`}
+            alt={item.title}
+          />
+        </div>
+        <h4 className="font-bold text-white line-clamp-1">{item.title}</h4>
+        <div
+          className={cx(
+            "absolute bottom-0 h-1 w-full rounded-full bg-red-600 transition-transform",
+            isSelected ? "scale-x-100" : "scale-x-0"
+          )}
+        />
+      </button>
+    </li>
   );
 }

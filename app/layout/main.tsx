@@ -46,7 +46,6 @@ type MainProps = {
   searchFallbackData?: {
     favoriteShows?: ReturnedGetFavoriteShows;
   };
-  shows?: ReturnedGetFavoriteShows;
 };
 
 const navigation = [

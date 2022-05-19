@@ -5,7 +5,6 @@ import {
   InstantSearch,
   useHits,
 } from "react-instantsearch-hooks-web";
-import { useHarmonicIntervalFn } from "react-use";
 
 import {
   cx,
@@ -41,14 +40,13 @@ export default function Index() {
 
 function Preview() {
   const { hits } = useHits<Hit<ShowItem | MovieItem>>();
-  const [selectedHitIndex, setSelectedHitIndex] = useState(0);
-  const selectedHit = hits[selectedHitIndex];
+  const [selectedHit, setSelectedHit] = useState<Hit<
+    ShowItem | MovieItem
+  > | null>(null);
 
-  useHarmonicIntervalFn(() => {
-    const index = selectedHitIndex < hits.length - 1 ? selectedHitIndex + 1 : 0;
-
-    setSelectedHitIndex(index);
-  }, 5000);
+  useEffect(() => {
+    setSelectedHit(hits[0]);
+  }, [hits]);
 
   if (!selectedHit) {
     return null;
@@ -118,7 +116,7 @@ function Preview() {
             <div className="w-full">
               <h3 className="mb-2 text-2xl font-bold text-white">Popular</h3>
               <ul className="flex space-x-4 overflow-x-scroll list-none touch-pan-x">
-                {hits.map((hit, index) => {
+                {hits.map((hit) => {
                   const isSelected = selectedHit.objectID === hit.objectID;
 
                   return (
@@ -126,7 +124,7 @@ function Preview() {
                       key={hit.objectID}
                       item={hit}
                       isSelected={isSelected}
-                      onClick={() => setSelectedHitIndex(index)}
+                      onClick={() => setSelectedHit(hit)}
                     />
                   );
                 })}

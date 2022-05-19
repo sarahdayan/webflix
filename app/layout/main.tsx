@@ -67,26 +67,26 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
           >
             {({ open }) => (
               <>
-                <div className="container px-2 mx-auto sm:px-6 lg:px-8">
-                  <div className="relative flex items-center justify-between h-20">
+                <div className="container mx-auto px-2 sm:px-6 lg:px-8">
+                  <div className="relative flex h-20 items-center justify-between">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                       {/* Mobile menu button*/}
-                      <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-white/50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                      <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-white/50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                         <span className="sr-only">Open main menu</span>
                         {open ? (
-                          <XIcon className="block w-6 h-6" aria-hidden="true" />
+                          <XIcon className="block h-6 w-6" aria-hidden="true" />
                         ) : (
                           <MenuIcon
-                            className="block w-6 h-6"
+                            className="block h-6 w-6"
                             aria-hidden="true"
                           />
                         )}
                       </Disclosure.Button>
                     </div>
-                    <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
+                    <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                       <Link
                         to={{ pathname: "/" }}
-                        className="flex items-center flex-shrink-0"
+                        className="flex flex-shrink-0 items-center"
                       >
                         <WebflixLogo className="h-6 text-red-600" />
                       </Link>
@@ -224,7 +224,7 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
                             templates: {
                               item({ item }) {
                                 return (
-                                  <div className="p-3 text-sm text-gray-400 rounded-md cursor-default select-none aria-selected:bg-gray-800/80 aria-selected:text-white">
+                                  <div className="cursor-default select-none rounded-md p-3 text-sm text-gray-400 aria-selected:bg-gray-800/80 aria-selected:text-white">
                                     <a
                                       className="flex items-center justify-between space-x-4"
                                       href={`/search/?q=${query}`}
@@ -232,7 +232,7 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
                                       <div>
                                         {(item as { text: string }).text}
                                       </div>
-                                      <CornerDownLeft className="flex-none w-5 h-6 text-gray-400 transition-opacity aria-selected:opacity-100 aria-unselected:opacity-0" />
+                                      <CornerDownLeft className="h-6 w-5 flex-none text-gray-400 transition-opacity aria-selected:opacity-100 aria-unselected:opacity-0" />
                                     </a>
                                   </div>
                                 );
@@ -301,7 +301,7 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
                                 <div className="flex flex-1 divide-x divide-gray-500 divide-opacity-20">
                                   <div className="relative h-[36rem] min-w-0 flex-auto scroll-py-4 overflow-y-auto px-4 pt-4">
                                     {children}
-                                    <div className="sticky bottom-0 left-0 right-0 h-4 pointer-events-none bg-gradient-to-t from-gray-900" />
+                                    <div className="pointer-events-none sticky bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-gray-900" />
                                   </div>
                                   {current &&
                                     (isMovie(current) || isShow(current)) && (
@@ -316,24 +316,24 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
                                       />
                                     )}
                                 </div>
-                                <div className="flex flex-wrap items-center flex-none px-4 py-3 space-x-2 text-xs text-gray-600">
+                                <div className="flex flex-none flex-wrap items-center space-x-2 px-4 py-3 text-xs text-gray-600">
                                   <span>Type</span>
-                                  <kbd className="flex items-center justify-center w-5 h-5 mx-1 font-semibold border border-gray-600 rounded">
-                                    <CornerDownLeft className="w-3 h-3" />
+                                  <kbd className="mx-1 flex h-5 w-5 items-center justify-center rounded border border-gray-600 font-semibold">
+                                    <CornerDownLeft className="h-3 w-3" />
                                   </kbd>
                                   <span>to select</span>
                                   <div className="flex items-center space-x-2">
                                     <div className="flex items-center space-x-1">
-                                      <kbd className="flex items-center justify-center w-5 h-5 mx-1 font-semibold border border-gray-600 rounded">
-                                        <ArrowDownIcon className="w-3 h-3" />
+                                      <kbd className="mx-1 flex h-5 w-5 items-center justify-center rounded border border-gray-600 font-semibold">
+                                        <ArrowDownIcon className="h-3 w-3" />
                                       </kbd>
-                                      <kbd className="flex items-center justify-center w-5 h-5 mx-1 font-semibold border border-gray-600 rounded">
-                                        <ArrowUpIcon className="w-3 h-3" />
+                                      <kbd className="mx-1 flex h-5 w-5 items-center justify-center rounded border border-gray-600 font-semibold">
+                                        <ArrowUpIcon className="h-3 w-3" />
                                       </kbd>
                                     </div>
                                     <span>to navigate</span>
                                   </div>
-                                  <kbd className="flex items-center justify-center w-8 h-5 mx-1 text-xs tracking-tighter border border-gray-600 rounded">
+                                  <kbd className="mx-1 flex h-5 w-8 items-center justify-center rounded border border-gray-600 text-xs tracking-tighter">
                                     esc
                                   </kbd>
                                   <span>to close</span>
@@ -347,12 +347,12 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
 
                       {/* Profile dropdown */}
                       {user ? (
-                        <Menu as="div" className="relative flex-none ml-3">
+                        <Menu as="div" className="relative ml-3 flex-none">
                           <div>
-                            <Menu.Button className="flex text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                            <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                               <span className="sr-only">Open user menu</span>
                               <img
-                                className="flex-none w-8 h-8 rounded-full"
+                                className="h-8 w-8 flex-none rounded-full"
                                 src={gravatar.url(user.email)}
                                 alt={user.email}
                               />
@@ -367,7 +367,7 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                           >
-                            <Menu.Items className="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                               <Menu.Item>
                                 {({ active }) => (
                                   <a
@@ -415,7 +415,7 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
                       ) : (
                         <Link
                           to={{ pathname: "/login" }}
-                          className="px-4 py-2 ml-3 text-white transition-colors bg-red-500 rounded whitespace-nowrap hover:bg-red-600 focus:bg-red-400"
+                          className="ml-3 whitespace-nowrap rounded bg-red-500 px-4 py-2 text-white transition-colors hover:bg-red-600 focus:bg-red-400"
                         >
                           Sign in
                         </Link>
@@ -425,7 +425,7 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
                 </div>
 
                 <Disclosure.Panel className="sm:hidden">
-                  <div className="px-2 pt-2 pb-3 space-y-1">
+                  <div className="space-y-1 px-2 pt-2 pb-3">
                     {navigation.map((item) => (
                       <Disclosure.Button
                         key={item.name}
@@ -464,10 +464,10 @@ function MovieOrShowItem({ item, components }: MovieOrShowItemProps) {
   const timestamp = isMovie(item) ? item.release_date : item.first_air_date;
 
   return (
-    <div className="p-3 text-sm text-gray-400 rounded-md cursor-default select-none aria-selected:bg-gray-800/80 aria-selected:text-white">
+    <div className="cursor-default select-none rounded-md p-3 text-sm text-gray-400 aria-selected:bg-gray-800/80 aria-selected:text-white">
       <a className="flex items-center justify-between space-x-4" href={url}>
         <div className="flex items-stretch space-x-4">
-          <div className="relative flex-none w-12 overflow-hidden rounded-sm">
+          <div className="relative w-12 flex-none overflow-hidden rounded-sm">
             <ImageWithLoader
               src={`${TMDB_IMAGE_BASE_URL}original${item.poster_path}`}
               className="absolute inset-0 transition-colors"
@@ -498,7 +498,7 @@ function MovieOrShowItem({ item, components }: MovieOrShowItemProps) {
             </p>
           </div>
         </div>
-        <CornerDownLeft className="flex-none w-5 h-6 text-gray-400 transition-opacity aria-selected:opacity-100 aria-unselected:opacity-0" />
+        <CornerDownLeft className="h-6 w-5 flex-none text-gray-400 transition-opacity aria-selected:opacity-100 aria-unselected:opacity-0" />
       </a>
     </div>
   );
@@ -512,9 +512,9 @@ function ActorOrDirectorItem({ item }: ActorItemProps) {
   const [name, image] = item.label.split("||");
 
   return (
-    <div className="flex items-center justify-between p-3 space-x-4 text-sm rounded-md cursor-default select-none aria-selected:bg-gray-800/80 aria-selected:text-white">
+    <div className="flex cursor-default select-none items-center justify-between space-x-4 rounded-md p-3 text-sm aria-selected:bg-gray-800/80 aria-selected:text-white">
       <div className="flex items-center space-x-4">
-        <div className="relative flex-none w-12 h-12 overflow-hidden rounded-full">
+        <div className="relative h-12 w-12 flex-none overflow-hidden rounded-full">
           <ImageWithLoader
             src={`${TMDB_IMAGE_BASE_URL}original${image}`}
             alt={name}
@@ -533,7 +533,7 @@ function ActorOrDirectorItem({ item }: ActorItemProps) {
           <h2 className="font-semibold text-white line-clamp-1">{name}</h2>
         </div>
       </div>
-      <CornerDownLeft className="flex-none w-5 h-6 text-gray-400 transition-opacity aria-selected:opacity-100 aria-unselected:opacity-0" />
+      <CornerDownLeft className="h-6 w-5 flex-none text-gray-400 transition-opacity aria-selected:opacity-100 aria-unselected:opacity-0" />
     </div>
   );
 }
@@ -553,17 +553,17 @@ function MovieOrShowPreview({
 
   return (
     <div className="hidden h-[36rem] w-1/2 flex-none flex-col overflow-y-auto md:flex">
-      <div className="flex flex-col justify-between flex-none h-full p-4">
+      <div className="flex h-full flex-none flex-col justify-between p-4">
         <div>
           <h2 className="mb-2 text-2xl font-semibold text-white line-clamp-1">
             <div className="child-mark:bg-transparent child-mark:text-red-600 child-mark:underline child-mark:underline-offset-2">
               <components.Highlight hit={item} attribute="title" />
             </div>
           </h2>
-          <div className="flex flex-col justify-between mb-1 lg:flex-row lg:items-center lg:space-x-3">
-            <div className="flex items-center mb-2 space-x-2 text-xs text-gray-400 lg:mb-4">
+          <div className="mb-1 flex flex-col justify-between lg:flex-row lg:items-center lg:space-x-3">
+            <div className="mb-2 flex items-center space-x-2 text-xs text-gray-400 lg:mb-4">
               {type && <span>{type}</span>}
-              <span className="flex-none inline-block w-px h-4 bg-white/20" />
+              <span className="inline-block h-4 w-px flex-none bg-white/20" />
               {timestamp && <span>{new Date(timestamp).getFullYear()}</span>}
             </div>
             <div className="mb-4 space-x-2">
@@ -583,7 +583,7 @@ function MovieOrShowPreview({
             </div>
           </div>
           <h3 className="mb-3 font-semibold text-white">Cast</h3>
-          <div className="relative z-0 flex flex-wrap flex-none mb-4 space-x-2 overflow-hidden">
+          <div className="relative z-0 mb-4 flex flex-none flex-wrap space-x-2 overflow-hidden">
             {item.cast?.slice(0, 10).map((actor) => {
               if (!actor.profile_path) {
                 return null;
@@ -592,7 +592,7 @@ function MovieOrShowPreview({
               return (
                 <div
                   key={actor.name}
-                  className="relative flex-none w-8 h-8 mb-2 overflow-hidden rounded-full"
+                  className="relative mb-2 h-8 w-8 flex-none overflow-hidden rounded-full"
                 >
                   <ImageWithLoader
                     key={actor.name}
@@ -617,7 +617,7 @@ function MovieOrShowPreview({
         {item.videos.length > 0 ? (
           <YouTubeVideo id={item.videos[0].key} />
         ) : (
-          <div className="relative flex items-center overflow-hidden rounded aspect-video">
+          <div className="relative flex aspect-video items-center overflow-hidden rounded">
             <ImageWithLoader
               src={`${TMDB_IMAGE_BASE_URL}original${item.backdrop_path}`}
               fallback={({ isLoading }) => (
@@ -640,7 +640,7 @@ type HeadingProps = React.PropsWithChildren<{}>;
 
 function Heading({ children }: HeadingProps) {
   return (
-    <h2 className="flex items-center px-3 space-x-2 text-lg font-semibold text-gray-200">
+    <h2 className="flex items-center space-x-2 px-3 text-lg font-semibold text-gray-200">
       {children}
     </h2>
   );
@@ -648,7 +648,7 @@ function Heading({ children }: HeadingProps) {
 
 function SourceHeading({ children }: HeadingProps) {
   return (
-    <h3 className="px-3 mt-4 mb-2 text-xs font-semibold text-gray-200">
+    <h3 className="mt-4 mb-2 px-3 text-xs font-semibold text-gray-200">
       {children}
     </h3>
   );

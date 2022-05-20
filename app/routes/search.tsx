@@ -49,7 +49,7 @@ export default function Page() {
   const favoriteShows = useOptionalFavoriteShowsWithNewSeasons();
 
   return (
-    <Main user={user} searchFallbackData={{ favoriteShows }}>
+    <Main user={user} favoriteShows={favoriteShows}>
       <main className="relative top-0 flex min-h-screen w-full flex-col bg-cover bg-center pt-40 pb-10">
         <div className="container relative z-20 mx-auto px-2 text-white sm:px-6 lg:px-8">
           <InstantSearchSSRProvider {...serverState}>

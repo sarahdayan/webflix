@@ -44,9 +44,7 @@ import type {
 type MainProps = {
   children?: React.ReactNode;
   user?: ReturnedGetUser;
-  searchFallbackData?: {
-    favoriteShows?: ReturnedGetFavoriteShows;
-  };
+  favoriteShows?: ReturnedGetFavoriteShows;
 };
 
 const navigation = [
@@ -55,7 +53,7 @@ const navigation = [
   { name: "Watchlist", href: "/", current: false },
 ];
 
-export function Main({ children, user, searchFallbackData = {} }: MainProps) {
+export function Main({ children, user, favoriteShows }: MainProps) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -125,15 +123,12 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
                           {
                             sourceId: "new_sesons",
                             getItems() {
-                              if (
-                                query.length > 0 ||
-                                !searchFallbackData.favoriteShows
-                              ) {
+                              if (query.length > 0 || !favoriteShows) {
                                 return [];
                               }
 
-                              return searchFallbackData.favoriteShows.map(
-                                (show) => showToAlgoliaRecord(show as any)
+                              return favoriteShows.map((show) =>
+                                showToAlgoliaRecord(show as any)
                               );
                             },
                             templates: {

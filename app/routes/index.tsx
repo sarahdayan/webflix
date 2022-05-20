@@ -41,7 +41,7 @@ export default function Index() {
   const favoriteShows = useOptionalFavoriteShowsWithNewSeasons();
 
   return (
-    <Main user={user} searchFallbackData={{ favoriteShows }}>
+    <Main user={user} favoriteShows={favoriteShows}>
       <InstantSearchSSRProvider {...serverState}>
         <Hero />
       </InstantSearchSSRProvider>

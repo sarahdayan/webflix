@@ -62,7 +62,7 @@ export default function Page() {
 }
 
 type SearchProps = {
-  url: URL;
+  url?: URL;
 };
 
 function Search({ url }: SearchProps) {
@@ -73,9 +73,7 @@ function Search({ url }: SearchProps) {
       routing={{
         router: history({
           getLocation: () => {
-            return typeof window === "undefined"
-              ? new URL(url)
-              : window.location;
+            return typeof window === "undefined" ? url : window.location;
           },
         }),
         stateMapping: {

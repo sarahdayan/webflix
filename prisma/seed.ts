@@ -279,22 +279,6 @@ async function seed() {
     },
   });
 
-  await prisma.note.create({
-    data: {
-      title: "My first note",
-      body: "Hello, world!",
-      userId: user.id,
-    },
-  });
-
-  await prisma.note.create({
-    data: {
-      title: "My second note",
-      body: "Hello, world!",
-      userId: user.id,
-    },
-  });
-
   console.log(`Database has been seeded. 🌱`);
 }
 

@@ -12,7 +12,6 @@ model User {
   email String @unique
 
   password       Password?
-  notes          Note[]
   viewedEpisodes Episode[]
 
   createdAt DateTime @default(now())
@@ -24,18 +23,6 @@ model Password {
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String @unique
-}
-
-model Note {
-  id    String @id @default(cuid())
-  title String
-  body  String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
 }
 
 model Movie {

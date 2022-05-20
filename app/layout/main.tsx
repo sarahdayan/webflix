@@ -19,7 +19,11 @@ import { WebflixLogo } from "~/components/logos/webflix";
 import type { ReturnedGetUser } from "~/session.server";
 import { Autocomplete } from "~/components/autocomplete";
 import { searchClient } from "~/search-client";
-import { ALGOLIA_INDEX_NAME, TMDB_IMAGE_BASE_URL } from "~/constants";
+import {
+  ALGOLIA_FILTERS,
+  ALGOLIA_INDEX_NAME,
+  TMDB_IMAGE_BASE_URL,
+} from "~/constants";
 import { ImageWithLoader } from "~/components/image-with-loader";
 import type { MovieItem } from "~/types/MovieItem";
 import type { ShowItem } from "~/types/ShowItem";
@@ -170,8 +174,7 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
                                       hitsPerPage: 4,
                                       attributesToSnippet: ["overview:20"],
                                       snippetEllipsisText: "…",
-                                      filters:
-                                        "spoken_languages:English AND NOT genres:Kids",
+                                      filters: ALGOLIA_FILTERS,
                                     },
                                   },
                                 ],

@@ -119,164 +119,155 @@ export function Main({ children, user, favoriteShows }: MainProps) {
                         defaultActiveItemId={0}
                         placeholder="Search for movies, shows, actors, etc."
                         initialState={{ query: initialQuery }}
-                        getSources={({ query }) => [
-                          {
-                            sourceId: "new_sesons",
-                            getItems() {
-                              if (query.length > 0 || !favoriteShows) {
-                                return [];
-                              }
-
-                              return favoriteShows.map((show) =>
-                                showToAlgoliaRecord(show as any)
-                              );
-                            },
-                            templates: {
-                              header() {
-                                return (
-                                  <>
-                                    <Heading>Suggestions for you</Heading>
-                                    <SourceHeading>
-                                      New seasons of shows you like
-                                    </SourceHeading>
-                                  </>
-                                );
-                              },
-                              item({ item, components }) {
-                                return (
-                                  <MovieOrShowItem
-                                    item={item as any}
-                                    components={components}
-                                  />
-                                );
-                              },
-                            },
-                          },
-                          {
-                            sourceId: "movies_and_shows",
-                            getItems() {
-                              if (query.length === 0) {
-                                return [];
-                              }
-
-                              return getAlgoliaResults({
-                                searchClient,
-                                queries: [
-                                  {
-                                    indexName: ALGOLIA_INDEX_NAME,
-                                    query,
-                                    params: {
-                                      hitsPerPage: 4,
-                                      attributesToSnippet: ["overview:20"],
-                                      snippetEllipsisText: "…",
-                                      filters: ALGOLIA_FILTERS,
-                                    },
-                                  },
-                                ],
-                              });
-                            },
-                            onSelect({ item }) {
-                              if (item.objectID) {
-                                navigate(
-                                  getUrl(item as Hit<ShowItem | MovieItem>)
-                                );
-                              }
-                            },
-                            templates: {
-                              header() {
-                                return (
-                                  <>
-                                    <Heading>Results for "{query}"</Heading>
-                                    <SourceHeading>
-                                      Movies and shows
-                                    </SourceHeading>
-                                  </>
-                                );
-                              },
-                              item({ item, components }) {
-                                return (
-                                  <MovieOrShowItem
-                                    item={item as Hit<ShowItem | MovieItem>}
-                                    components={components}
-                                  />
-                                );
-                              },
-                            },
-                          },
-                          {
-                            sourceId: "all_results",
-                            getItems() {
-                              if (query.length === 0) {
-                                return [];
-                              }
-
-                              return [
-                                {
-                                  text: `All results for "${query}"`,
-                                },
-                              ];
-                            },
-                            onSelect() {
-                              navigate(`/search/?q=${query}`);
-                            },
-                            templates: {
-                              item({ item }) {
-                                return (
-                                  <div className="cursor-default select-none rounded-md p-3 text-sm text-gray-400 aria-selected:bg-gray-800/80 aria-selected:text-white">
-                                    <a
-                                      className="flex items-center justify-between space-x-4"
-                                      href={`/search/?q=${query}`}
-                                    >
-                                      <div>
-                                        {(item as { text: string }).text}
-                                      </div>
-                                      <CornerDownLeft className="h-6 w-5 flex-none text-gray-400 transition-opacity aria-selected:opacity-100 aria-unselected:opacity-0" />
-                                    </a>
-                                  </div>
-                                );
-                              },
-                            },
-                          },
-                          {
-                            sourceId: "actors",
-                            getItems() {
-                              if (query.length === 0) {
-                                return [];
-                              }
-
-                              return getAlgoliaFacets({
-                                searchClient,
-                                queries: [
-                                  {
-                                    indexName: ALGOLIA_INDEX_NAME,
-                                    facet: "cast.facet",
-                                    params: {
-                                      facetQuery: query,
-                                      maxFacetHits: 10,
-                                    },
-                                  },
-                                ],
-                                transformResponse({ facetHits }) {
-                                  return facetHits[0].filter(
-                                    (hit) => hit.label.split("||")[1]
+                        getSources={({ query }) => {
+                          if (query.length === 0 && favoriteShows) {
+                            return [
+                              {
+                                sourceId: "new_sesons",
+                                getItems() {
+                                  return favoriteShows.map((show) =>
+                                    showToAlgoliaRecord(show as any)
                                   );
                                 },
-                              });
-                            },
-                            templates: {
-                              header() {
-                                return <SourceHeading>Actors</SourceHeading>;
+                                templates: {
+                                  header() {
+                                    return (
+                                      <>
+                                        <Heading>Suggestions for you</Heading>
+                                        <SourceHeading>
+                                          New seasons of shows you like
+                                        </SourceHeading>
+                                      </>
+                                    );
+                                  },
+                                  item({ item, components }) {
+                                    return (
+                                      <MovieOrShowItem
+                                        item={item as any}
+                                        components={components}
+                                      />
+                                    );
+                                  },
+                                },
                               },
-                              item({ item }) {
-                                return (
-                                  <ActorOrDirectorItem
-                                    item={item as ActorItem}
-                                  />
-                                );
+                            ];
+                          }
+
+                          return [
+                            {
+                              sourceId: "movies_and_shows",
+                              getItems() {
+                                return getAlgoliaResults({
+                                  searchClient,
+                                  queries: [
+                                    {
+                                      indexName: ALGOLIA_INDEX_NAME,
+                                      query,
+                                      params: {
+                                        hitsPerPage: 4,
+                                        attributesToSnippet: ["overview:20"],
+                                        snippetEllipsisText: "…",
+                                        filters: ALGOLIA_FILTERS,
+                                      },
+                                    },
+                                  ],
+                                });
+                              },
+                              onSelect({ item }) {
+                                if (item.objectID) {
+                                  navigate(
+                                    getUrl(item as Hit<ShowItem | MovieItem>)
+                                  );
+                                }
+                              },
+                              templates: {
+                                header() {
+                                  return (
+                                    <>
+                                      <Heading>Results for "{query}"</Heading>
+                                      <SourceHeading>
+                                        Movies and shows
+                                      </SourceHeading>
+                                    </>
+                                  );
+                                },
+                                item({ item, components }) {
+                                  return (
+                                    <MovieOrShowItem
+                                      item={item as Hit<ShowItem | MovieItem>}
+                                      components={components}
+                                    />
+                                  );
+                                },
                               },
                             },
-                          },
-                        ]}
+                            {
+                              sourceId: "all_results",
+                              getItems() {
+                                return [
+                                  {
+                                    text: `All results for "${query}"`,
+                                  },
+                                ];
+                              },
+                              onSelect() {
+                                navigate(`/search/?q=${query}`);
+                              },
+                              templates: {
+                                item({ item }) {
+                                  return (
+                                    <div className="cursor-default select-none rounded-md p-3 text-sm text-gray-400 aria-selected:bg-gray-800/80 aria-selected:text-white">
+                                      <a
+                                        className="flex items-center justify-between space-x-4"
+                                        href={`/search/?q=${query}`}
+                                      >
+                                        <div>
+                                          {(item as { text: string }).text}
+                                        </div>
+                                        <CornerDownLeft className="h-6 w-5 flex-none text-gray-400 transition-opacity aria-selected:opacity-100 aria-unselected:opacity-0" />
+                                      </a>
+                                    </div>
+                                  );
+                                },
+                              },
+                            },
+                            {
+                              sourceId: "actors",
+                              getItems() {
+                                return getAlgoliaFacets({
+                                  searchClient,
+                                  queries: [
+                                    {
+                                      indexName: ALGOLIA_INDEX_NAME,
+                                      facet: "cast.facet",
+                                      params: {
+                                        facetQuery: query,
+                                        maxFacetHits: 10,
+                                      },
+                                    },
+                                  ],
+                                  transformResponse({ facetHits }) {
+                                    return facetHits[0].filter(
+                                      (hit) => hit.label.split("||")[1]
+                                    );
+                                  },
+                                });
+                              },
+                              templates: {
+                                header() {
+                                  return <SourceHeading>Actors</SourceHeading>;
+                                },
+                                item({ item }) {
+                                  return (
+                                    <ActorOrDirectorItem
+                                      item={item as ActorItem}
+                                    />
+                                  );
+                                },
+                              },
+                            },
+                          ];
+                        }}
                         render={(
                           { children, render, state, components },
                           root

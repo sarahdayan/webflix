@@ -43,7 +43,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   return { serverState, url };
 };
 
-export default function Index() {
+export default function Page() {
   const { serverState, url } = useLoaderData();
   const user = useOptionalUser();
   const favoriteShows = useOptionalFavoriteShowsWithNewSeasons();

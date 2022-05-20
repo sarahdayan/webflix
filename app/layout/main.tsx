@@ -348,7 +348,6 @@ export function Main({ children, user, searchFallbackData = {} }: MainProps) {
                         }}
                       />
 
-                      {/* Profile dropdown */}
                       {user ? (
                         <Menu as="div" className="relative ml-3 flex-none">
                           <div>

@@ -129,6 +129,11 @@ export function Main({ children, user, favoriteShows }: MainProps) {
                                     showToAlgoliaRecord(show as any)
                                   );
                                 },
+                                onSelect({ item }) {
+                                  if (item.objectID) {
+                                    navigate(getUrl(item as Hit<ShowItem>));
+                                  }
+                                },
                                 templates: {
                                   header() {
                                     return (
@@ -657,7 +662,7 @@ function showToAlgoliaRecord(
   const firstAirDate = show.seasons[0].episodes[0].airDate;
 
   return {
-    objectID: String(show.tmdbId),
+    objectID: `show_${show.tmdbId}`,
     record_type: "show",
     backdrop_path: show.backdropPath,
     poster_path: show.posterPath,

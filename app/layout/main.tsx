@@ -153,6 +153,10 @@ export function Main({ children, user, favoriteShows }: MainProps) {
                             ];
                           }
 
+                          if (query.length === 0 && !user) {
+                            return [];
+                          }
+
                           return [
                             {
                               sourceId: "movies_and_shows",

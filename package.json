@@ -7,10 +7,10 @@
   "scripts": {
     "postinstall": "remix setup node",
     "build": "run-s build:*",
-    "build:css": "npm run generate:css -- --minify",
+    "build:css": "yarn run generate:css -- --minify",
     "build:remix": "remix build",
     "dev": "run-p dev:*",
-    "dev:css": "npm run generate:css -- --watch",
+    "dev:css": "yarn run generate:css -- --watch",
     "dev:remix": "cross-env NODE_ENV=development binode --require ./mocks -- @remix-run/dev:remix dev",
     "format": "prettier --write .",
     "generate:css": "tailwindcss -o ./app/styles/tailwind.css",
@@ -20,7 +20,7 @@
     "start:mocks": "binode --require ./mocks -- @remix-run/serve:remix-serve build",
     "test": "vitest",
     "test:e2e:dev": "start-server-and-test dev http://localhost:3000 \"cypress open\"",
-    "pretest:e2e:run": "npm run build",
+    "pretest:e2e:run": "yarn run build",
     "test:e2e:run": "cross-env PORT=8811 start-server-and-test start:mocks http://localhost:8811 \"cypress run\"",
     "typecheck": "tsc -b && tsc -b cypress",
     "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run"

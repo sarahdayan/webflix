@@ -1,8 +1,8 @@
 {
   "name": "webflix-3f91",
   "private": true,
-  "description": "",
-  "license": "",
+  "description": "A Netflix lookalike built with Remix and Algolia.",
+  "license": "MIT",
   "sideEffects": false,
   "scripts": {
     "postinstall": "remix setup node",

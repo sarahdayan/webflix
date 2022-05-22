@@ -100,7 +100,7 @@ function Search({ url }: SearchProps) {
         },
       }}
     >
-      <Configure hitsPerPage={30} filters={ALGOLIA_FILTERS} />
+      <Configure hitsPerPage={12} filters={ALGOLIA_FILTERS} />
       <VirtualSearchBox />
       <div className="mb-5 flex touch-pan-x space-x-3 overflow-x-scroll">
         <span className="relative -top-px mt-2.5 text-gray-500">Genres</span>

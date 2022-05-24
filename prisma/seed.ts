@@ -249,31 +249,201 @@ async function seed() {
       },
       viewedEpisodes: {
         connect: [
-          { tmdbId: 1198665 },
-          { tmdbId: 1203677 },
-          { tmdbId: 1203679 },
-          { tmdbId: 1203680 },
-          { tmdbId: 1205904 },
-          { tmdbId: 1205905 },
-          { tmdbId: 1205906 },
-          { tmdbId: 1205907 },
-          { tmdbId: 1250983 },
-          { tmdbId: 1250984 },
-          { tmdbId: 1250985 },
-          { tmdbId: 1250986 },
-          { tmdbId: 1250987 },
-          { tmdbId: 1250988 },
-          { tmdbId: 1250989 },
-          { tmdbId: 1250990 },
-          { tmdbId: 1250991 },
-          { tmdbId: 1657328 },
-          { tmdbId: 1657329 },
-          { tmdbId: 1657330 },
-          { tmdbId: 1657331 },
-          { tmdbId: 1657332 },
-          { tmdbId: 1657333 },
-          { tmdbId: 1657334 },
-          { tmdbId: 1657335 },
+          {
+            tmdbId: 1198665,
+          },
+          {
+            tmdbId: 1203677,
+          },
+          {
+            tmdbId: 1203679,
+          },
+          {
+            tmdbId: 1203680,
+          },
+          {
+            tmdbId: 1205904,
+          },
+          {
+            tmdbId: 1205905,
+          },
+          {
+            tmdbId: 1205906,
+          },
+          {
+            tmdbId: 1205907,
+          },
+          {
+            tmdbId: 1250983,
+          },
+          {
+            tmdbId: 1250984,
+          },
+          {
+            tmdbId: 1250985,
+          },
+          {
+            tmdbId: 1250986,
+          },
+          {
+            tmdbId: 1250987,
+          },
+          {
+            tmdbId: 1250988,
+          },
+          {
+            tmdbId: 1250989,
+          },
+          {
+            tmdbId: 1250990,
+          },
+          {
+            tmdbId: 1250991,
+          },
+          {
+            tmdbId: 1657328,
+          },
+          {
+            tmdbId: 1657329,
+          },
+          {
+            tmdbId: 1657330,
+          },
+          {
+            tmdbId: 1657331,
+          },
+          {
+            tmdbId: 1657332,
+          },
+          {
+            tmdbId: 1657333,
+          },
+          {
+            tmdbId: 1657334,
+          },
+          {
+            tmdbId: 1657335,
+          },
+          {
+            tmdbId: 1204083,
+          },
+          {
+            tmdbId: 1204085,
+          },
+          {
+            tmdbId: 1235728,
+          },
+          {
+            tmdbId: 1235729,
+          },
+          {
+            tmdbId: 1235730,
+          },
+          {
+            tmdbId: 1235731,
+          },
+          {
+            tmdbId: 1235732,
+          },
+          {
+            tmdbId: 1235734,
+          },
+          {
+            tmdbId: 1235735,
+          },
+          {
+            tmdbId: 1235736,
+          },
+          {
+            tmdbId: 1347723,
+          },
+          {
+            tmdbId: 1401390,
+          },
+          {
+            tmdbId: 1401391,
+          },
+          {
+            tmdbId: 1401392,
+          },
+          {
+            tmdbId: 1401393,
+          },
+          {
+            tmdbId: 1401394,
+          },
+          {
+            tmdbId: 1401395,
+          },
+          {
+            tmdbId: 1401396,
+          },
+          {
+            tmdbId: 1401397,
+          },
+          {
+            tmdbId: 1401398,
+          },
+          {
+            tmdbId: 1563477,
+          },
+          {
+            tmdbId: 1983467,
+          },
+          {
+            tmdbId: 1983468,
+          },
+          {
+            tmdbId: 1983469,
+          },
+          {
+            tmdbId: 1983470,
+          },
+          {
+            tmdbId: 1983471,
+          },
+          {
+            tmdbId: 1983472,
+          },
+          {
+            tmdbId: 1983474,
+          },
+          {
+            tmdbId: 1983473,
+          },
+          {
+            tmdbId: 1983475,
+          },
+          {
+            tmdbId: 2396640,
+          },
+          {
+            tmdbId: 2506843,
+          },
+          {
+            tmdbId: 2506844,
+          },
+          {
+            tmdbId: 2506845,
+          },
+          {
+            tmdbId: 2506846,
+          },
+          {
+            tmdbId: 2506847,
+          },
+          {
+            tmdbId: 2506848,
+          },
+          {
+            tmdbId: 2506849,
+          },
+          {
+            tmdbId: 2506850,
+          },
+          {
+            tmdbId: 2506851,
+          },
         ],
       },
     },

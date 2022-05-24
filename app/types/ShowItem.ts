@@ -5,9 +5,9 @@ import type { Video } from "./Video";
 type Season = {
   air_date: number;
   episode_count: number;
-  name: string;
+  name: string | null;
   overview: string | null;
-  poster_path: string;
+  poster_path: string | null;
   season_number: number;
 };
 

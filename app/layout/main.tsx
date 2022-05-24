@@ -6,6 +6,7 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
   MenuIcon,
+  BellIcon,
   XIcon,
 } from "@heroicons/react/outline";
 import { Link } from "@remix-run/react";
@@ -13,6 +14,8 @@ import gravatar from "gravatar";
 import type { Hit } from "instantsearch.js";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "remix";
+import { isAfter } from "date-fns";
+import * as timeago from "timeago.js";
 
 import { cx, getUrl, isMovie, isShow } from "~/utils";
 import { WebflixLogo } from "~/components/logos/webflix";
@@ -147,7 +150,7 @@ export function Main({ children, user, favoriteShows }: MainProps) {
                                   },
                                   item({ item, components }) {
                                     return (
-                                      <MovieOrShowItem
+                                      <ShowWithNewSeasonItem
                                         item={item as any}
                                         components={components}
                                       />
@@ -501,6 +504,81 @@ function MovieOrShowItem({ item, components }: MovieOrShowItemProps) {
   );
 }
 
+type ShowWithNewSeasonItemProps = {
+  item: Hit<ShowItem>;
+  components: AutocompleteComponents;
+};
+
+function ShowWithNewSeasonItem({
+  item,
+  components,
+}: ShowWithNewSeasonItemProps) {
+  const url = getUrl(item);
+  const newSeason = item.seasons[item.seasons.length - 1];
+  const today = new Date();
+  const airDate = new Date(newSeason.air_date);
+
+  return (
+    <div className="cursor-default select-none rounded-md p-3 text-sm text-gray-400 aria-selected:bg-gray-800/80 aria-selected:text-white">
+      <a className="flex items-center justify-between space-x-4" href={url}>
+        <div className="flex items-stretch space-x-4">
+          <div className="relative w-12 flex-none overflow-hidden rounded-sm">
+            <ImageWithLoader
+              src={`${TMDB_IMAGE_BASE_URL}original${item.poster_path}`}
+              className="absolute inset-0 transition-colors"
+              alt={item.title}
+              fallback={({ isLoading }) => (
+                <div
+                  className={cx(
+                    "absolute inset-0 bg-gray-700 transition-colors",
+                    isLoading ? "animate-pulse opacity-100" : "opacity-0"
+                  )}
+                />
+              )}
+            />
+          </div>
+
+          <div className="flex flex-col justify-between">
+            <h2 className="font-semibold text-white line-clamp-1">
+              <div className="child-mark:bg-transparent child-mark:text-red-600 child-mark:underline-offset-2 child-mark:aria-selected:underline">
+                <components.Highlight hit={item} attribute="title" />
+              </div>
+            </h2>
+            <p>
+              Season {item.seasons.length}{" "}
+              <span className="inline-flex items-center rounded-full bg-gray-700 px-1.5 text-xs font-medium text-gray-300">
+                {isAfter(airDate, today)
+                  ? timeago.format(newSeason.air_date, "en_US")
+                  : "Available"}
+              </span>
+            </p>
+            <p className="line-clamp-1">
+              {item.cast
+                .slice(0, 2)
+                .map(({ name }) => name)
+                .join(", ")}
+            </p>
+          </div>
+        </div>
+        <button
+          type="button"
+          className="group inline-flex items-center whitespace-nowrap rounded-full bg-gray-700/60 px-3.5 py-2 text-sm font-medium leading-4 text-white shadow-sm transition-colors hover:bg-gray-700/80 focus:outline-none focus:ring-2 focus:ring-offset-2"
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+          }}
+        >
+          <BellIcon
+            className="-ml-0.5 mr-2 h-4 w-4 fill-transparent stroke-yellow-500 stroke-2 group-hover:fill-yellow-500"
+            aria-hidden="true"
+          />
+          Remind me
+        </button>
+      </a>
+    </div>
+  );
+}
+
 type ActorItemProps = {
   item: ActorItem;
 };
@@ -658,7 +736,7 @@ function showToAlgoliaRecord(
     videos: Video[];
     seasons: Array<Season & { episodes: Episode[] }>;
   }
-) {
+): Hit<ShowItem> {
   const firstAirDate = show.seasons[0].episodes[0].airDate;
 
   return {
@@ -678,5 +756,13 @@ function showToAlgoliaRecord(
     })),
     in_production: show.inProduction,
     first_air_date: new Date(firstAirDate).getTime(),
+    seasons: show.seasons.map((season, index) => ({
+      air_date: new Date(season.episodes[0].airDate).getTime(),
+      episode_count: season.episodes.length,
+      name: null,
+      overview: season.overview,
+      poster_path: season.posterPath,
+      season_number: index + 1,
+    })),
   };
 }

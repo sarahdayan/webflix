@@ -53,9 +53,14 @@ export const loader: LoaderFunction = async ({ request }) => {
         const viewed = season.episodes.find((episode) =>
           episode.viewedBy.includes(user as User)
         );
-        const airDate = new Date(season.episodes[0].airDate);
+        const { airDate } = season.episodes[0] || { airDate: null };
+        const releaseDate = airDate && new Date(airDate);
 
-        return airDate.getFullYear() >= today.getFullYear() && !viewed;
+        if (!releaseDate) {
+          return true;
+        }
+
+        return releaseDate.getFullYear() >= today.getFullYear() && !viewed;
       });
     });
 

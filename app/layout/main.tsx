@@ -516,7 +516,6 @@ function ShowWithNewSeasonItem({
   const url = getUrl(item);
   const newSeason = item.seasons[item.seasons.length - 1];
   const today = new Date();
-  const airDate = new Date(newSeason.air_date);
 
   return (
     <div className="cursor-default select-none rounded-md p-3 text-sm text-gray-400 aria-selected:bg-gray-800/80 aria-selected:text-white">
@@ -547,9 +546,11 @@ function ShowWithNewSeasonItem({
             <p>
               Season {item.seasons.length}{" "}
               <span className="inline-flex items-center rounded-full bg-gray-700 px-1.5 text-xs font-medium text-gray-300">
-                {isAfter(airDate, today)
-                  ? timeago.format(newSeason.air_date, "en_US")
-                  : "Available"}
+                {newSeason.air_date
+                  ? isAfter(new Date(newSeason.air_date), today)
+                    ? timeago.format(newSeason.air_date, "en_US")
+                    : "Available"
+                  : "Soon"}
               </span>
             </p>
             <p className="line-clamp-1">
@@ -737,7 +738,9 @@ function showToAlgoliaRecord(
     seasons: Array<Season & { episodes: Episode[] }>;
   }
 ): Hit<ShowItem> {
-  const firstAirDate = show.seasons[0].episodes[0].airDate;
+  const { airDate: firstAirDate } = show.seasons[0].episodes[0] || {
+    airDate: null,
+  };
 
   return {
     objectID: `show_${show.tmdbId}`,
@@ -756,13 +759,17 @@ function showToAlgoliaRecord(
     })),
     in_production: show.inProduction,
     first_air_date: new Date(firstAirDate).getTime(),
-    seasons: show.seasons.map((season, index) => ({
-      air_date: new Date(season.episodes[0].airDate).getTime(),
-      episode_count: season.episodes.length,
-      name: null,
-      overview: season.overview,
-      poster_path: season.posterPath,
-      season_number: index + 1,
-    })),
+    seasons: show.seasons.map((season, index) => {
+      const { airDate } = season.episodes[0] || { airDate: null };
+
+      return {
+        air_date: airDate ? new Date(airDate).getTime() : null,
+        episode_count: season.episodes.length,
+        name: null,
+        overview: season.overview,
+        poster_path: season.posterPath,
+        season_number: index + 1,
+      };
+    }),
   };
 }

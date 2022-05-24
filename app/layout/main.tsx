@@ -544,8 +544,8 @@ function ShowWithNewSeasonItem({
               </div>
             </h2>
             <p>
-              Season {item.seasons.length}{" "}
-              <span className="inline-flex items-center rounded-full bg-gray-700 px-1.5 text-xs font-medium text-gray-300">
+              <span>Season {item.seasons.length}</span>
+              <span className="relative -top-[0.5px] ml-2 inline-flex items-center rounded-full bg-gray-700 px-1.5 text-xs font-medium text-gray-300">
                 {newSeason.air_date
                   ? isAfter(new Date(newSeason.air_date), today)
                     ? timeago.format(newSeason.air_date, "en_US")
